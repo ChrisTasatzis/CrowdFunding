@@ -51,6 +51,9 @@ namespace CrowdFunding.Models
                 .HasMany(p => p.Medias)
                 .WithOne(p => p.Project);
 
+            builder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
             base.OnModelCreating(builder);
         }
