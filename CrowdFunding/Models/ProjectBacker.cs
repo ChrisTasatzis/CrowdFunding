@@ -8,6 +8,7 @@ namespace CrowdFunding.Models
 {
     public class ProjectBacker
     {
+        public int Id { get; set; }
         public int ProjectId { get; set; }
         public int BackerId { get; set; }
         public decimal Contribution { get; set; }
