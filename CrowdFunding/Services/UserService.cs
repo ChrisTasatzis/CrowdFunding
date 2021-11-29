@@ -57,5 +57,10 @@ namespace CrowdFunding.Services
                 Description = "User saved successfully."
             };
         }
+
+        public void RemoveUser(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

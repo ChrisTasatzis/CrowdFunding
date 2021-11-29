@@ -11,5 +11,6 @@ namespace CrowdFunding.Services
     public interface IUserService
     {
         Response<User> CreateUser(User user);
+        void RemoveUser(User user);
     }
 }
