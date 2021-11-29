@@ -19,6 +19,7 @@ namespace CrowdFunding.Models
         [Description("Craft")] Craft,
         [Description("Games")] Games,
         [Description("Music")] Music,
-        [Description("Publishing")] Publishing
+        [Description("Publishing")] Publishing,
+        [Description("Other")] Other
     }
 }
