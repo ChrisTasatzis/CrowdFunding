@@ -20,7 +20,7 @@ namespace CrowdFunding.Services
             throw new NotImplementedException();
         }
 
-        public Response<bool> AddMedia(Media media)
+        public Response<bool> AddMedia(Photo media)
         {
             throw new NotImplementedException();
         }
@@ -75,7 +75,7 @@ namespace CrowdFunding.Services
             throw new NotImplementedException();
         }
 
-        public Response<bool> RemoveMedia(Media media)
+        public Response<bool> RemoveMedia(Photo media)
         {
             throw new NotImplementedException();
         }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CrowdFunding.Models
 {
-    public class ProjectBacker
+    public class Video
     {
         public int Id { get; set; }
-        public int ProjectId { get; set; }
-        public int BackerId { get; set; }
-        public FundingPackage FundingPackage { get; set; }
+        public string URL { get; set; }
         public DateTime DateTime { get; set; }
+        public Project Project { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace CrowdFunding.Services
         Response<bool> AddFundingPackage(FundingPackage fundingPackage);
         Response<bool> RemoveFundingPackage(FundingPackage fundingPackage);
 
-        Response<bool> AddMedia(Media media);
-        Response<bool> RemoveMedia(Media media);
+        Response<bool> AddMedia(Photo media);
+        Response<bool> RemoveMedia(Photo media);
 
         Response<bool> AddPost(Post post);
         Response<bool> RemovePost(Post post);

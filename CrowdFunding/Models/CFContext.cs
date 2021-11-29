@@ -48,8 +48,12 @@ namespace CrowdFunding.Models
                 .WithOne(p => p.Project);
 
             builder.Entity<Project>()
-                .HasMany(p => p.Medias)
+                .HasMany(p => p.Photos)
                 .WithOne(p => p.Project);
+
+            builder.Entity<Project>()
+             .HasMany(p => p.Videos)
+             .WithOne(p => p.Project);
 
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
