@@ -29,7 +29,6 @@ namespace CrowdFunding.Services
         Response<bool> AddPost(Post post);
         Response<bool> RemovePost(Post post);
 
-        Response<bool> BackProject(int projectId, int userId, FundingPackage fundingPackage);
 
     }
 }

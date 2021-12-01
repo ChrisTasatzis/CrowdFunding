@@ -11,6 +11,7 @@ namespace CrowdFunding.Services
         {
             _context = context;
         }
+
         public Response<User> CreateUser(User user)
         {
             if (user == null)
@@ -21,13 +22,21 @@ namespace CrowdFunding.Services
                     Description = "The given user was null."
                 };
 
-            if (user.FirstName == null || user.LastName == null || 
+            if (user.Id != 0)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 51,
+                    Description = "The given user had a non zero id."
+                };
+
+            if (user.FirstName == null || user.LastName == null ||
                 user.Email == null || user.Password == null)
             {
                 return new Response<User>
                 {
                     Data = null,
-                    StatusCode = 51,
+                    StatusCode = 52,
                     Description = "The given user has null properties."
                 };
             }
@@ -36,7 +45,7 @@ namespace CrowdFunding.Services
                 return new Response<User>
                 {
                     Data = null,
-                    StatusCode = 52,
+                    StatusCode = 53,
                     Description = "The given user Email is already taken."
                 };
 
@@ -46,7 +55,7 @@ namespace CrowdFunding.Services
                 return new Response<User>
                 {
                     Data = null,
-                    StatusCode = 53,
+                    StatusCode = 54,
                     Description = "Could not save changes."
                 };
 
@@ -58,9 +67,119 @@ namespace CrowdFunding.Services
             };
         }
 
-        public void RemoveUser(User user)
+        public Response<User> ReadUser(int id)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 50,
+                    Description = "No user with this id exists."
+                };
+
+            return new Response<User>
+            {
+                Data = user,
+                StatusCode = 0,
+                Description = "User Found."
+            };
+
+        }
+
+        public Response<User> UpdateUser(User user)
+        {
+            if (user == null)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 50,
+                    Description = "No user provided."
+                };
+
+            if (user.Id == 0)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 51,
+                    Description = "No user id provided."
+                };
+
+            var userDb = _context.Users.FirstOrDefault(u => u.Id == user.Id);
+
+            if (userDb == null)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 52,
+                    Description = "No user found with the id provided."
+                };
+
+            if (user.FirstName != null) userDb.FirstName = user.FirstName;
+            if (user.LastName != null) userDb.LastName = user.LastName;
+            if (user.Email != null) userDb.Email = user.Email;
+            if (user.Password != null) userDb.Password = user.Password;
+
+            if (_context.SaveChanges() != 1)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 53,
+                    Description = "Could not save changes."
+                };
+
+            return new Response<User>
+            {
+                Data = userDb,
+                StatusCode = 0,
+                Description = "User successfully updated."
+            };
+        }
+
+        public Response<bool> DeleteUser(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 50,
+                    Description = "No user with this id exists."
+                };
+
+            _context.Users.Remove(user);
+
+            if (_context.SaveChanges() != 1)
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 53,
+                    Description = "Could not save changes."
+                };
+
+            return new Response<bool>
+            {
+                Data = true,
+                StatusCode = 0,
+                Description = "User deleted successfully."
+            };
+        }
+
+        public Response<bool> BackProject(int projectId, int userId, int fundingPackageId)
+        {
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var fundingPackage = _context.FundingPackages.FirstOrDefault(f => f.Id == fundingPackageId);
+
+
+            return new Response<bool>
+            {
+                Data = true,
+                StatusCode = 0,
+                Description = "User successfully backed the project."
+            };
         }
     }
 }
