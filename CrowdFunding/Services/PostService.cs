@@ -1,4 +1,5 @@
-﻿using CrowdFunding.Models;
+﻿using CrowdFunding.DTO;
+using CrowdFunding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,55 +17,87 @@ namespace CrowdFunding.Services
             _context = context;
         }
 
-        public Post CreatePost(Post post, projectid)
-        {
-            var project = _context.Projects.Find(projectId);
-            if (project == null)
+        public Responce<Post> CreatePost(Post post, int projectId)
+
+        { if (post == null || projectId < 0)
             {
-                return null;
+                return new Response<Post>()
+                {
+                    Data = null,
+                    Description = "Post was null, please try again",
+                    StatusCode = 50
+                };
+                post.Project = _context.Projects.Find(projectId);
+                _context.Posts.Add(post);
+                if (_context.SaveChanges()==1);
+                return new Responce<Post>() 
+                { 
+                    Data = post
+                    Description = "Post was saved"
+                    StatusCode = 0 
+                };
+                return new Responce<Post>()
+                { Data = null,
+                    Description = "Post was not saved, please try again"
+                  StatusCode = 54 
+                };
+
             }
 
-            var post = new Post() { Project = project, DateTime=DateTime.Now, Text= text };
-            _context.Posts.Add(post);
-            _context.SaveChanges();
-            return post;
-        }
-
-        public Post ReadPost (int id)
+            public Responce<Post> ReadPost (int postId)
         {
-            return _context.Posts.Find(id);
+                if (_context.Posts.Find(postId) != null)
+                {
+                    return new Response<Post>()
+                    {
+                        Data = _context.Posts.Find(postId),
+                        Description = "Post Found",
+                        StatusCode = 0
+                    };
+                }
+                else
+                {
+                    return new Responce<Post>()
+                    {
+                        Data = null,
+                        Description = "Post Not Found",
+                        StatusCode = 50
+                    };
+                }
 
-        }
+            }
 
-        public List <Post> ReadPost(projectId, int pageCount, int pageSize)
+            public Responce<Post> DeletePost (int postId)
+            {
+                var post = _context.Posts.Find(postId);
+                if (post == null) return new Response<bool>() { Data = false, Description = "This post doesn't exist", StatusCode = 50 };
+
+                _context.Posts.Remove(post);
+                if (_context.SaveChanges() == 1)
+                {
+                    return new Response<bool>() { Data = true, Description = "Post Succesfully Deleted", StatusCode = 0 };
+                }
+                else
+                {
+                    return new Response<bool>() { Data = false, Description = "Could not save changes", StatusCode = 53 };
+                }
+
+            }
+
+        public Responce<Post>UpdatePost(int postId, Post post)
         {
-            Project project = _context.Projects.Find(projectId);
-            if (pageCount <= 0) pageCount = 1;
-            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
-          return _context.Posts
-                .Skip(pageCount - 1) * pageSize
-                .Take(pageSize)
-                .ToList();
-        }
+                var _contextPost = _context.Posts.Find(postId);
+                if (_contextPost == null) throw new KeyNotFoundException();
+                _contextPost.Text = post.Text;
 
-        public Post DeletePost(int id)
-        {
-            var contextPost = _context.Posts.Find(id);
-            if (contextPost == null) return false;
-            _context.Posts.Remove(contextPost);
-            _context.SaveChanges();
-            return _context.SaveChanges() == 1;
-            
-        }
+                _context.SaveChanges();
+                return new Responce<Post>()
+                {
+                    Data = _contextPost,
+                    Description = "Post was Succesfully Updated",
+                    StatusCode = 0
+                };
 
-        public Post UpdatePost(int id, Post post)
-        {
-            var contextPost = _context.Posts.Find(id);
-            if (contextPost == null) throw new KeyNotFoundException();
-            contextPost.Text = post.Text;
-            _context.SaveChanges();
-            return post;
-
-        }
+            }
     }
 }
