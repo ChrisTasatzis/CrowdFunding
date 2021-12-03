@@ -54,6 +54,7 @@ namespace CrowdFunding.Services
 
         public Response<bool> AddFundingPackage(FundingPackage fundingPackage)//mhpws thelei kai to id gia na mpei to fpackage sto project me to sygkekrimeno id?
         {
+            throw new NotImplementedException();
            // var project = 
         }
 
