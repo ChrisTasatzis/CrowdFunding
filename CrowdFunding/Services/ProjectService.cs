@@ -52,15 +52,19 @@ namespace CrowdFunding.Services
             };
         }
 
-        public Response<bool> AddFundingPackage(FundingPackage fundingPackage)//mhpws thelei kai to id gia na mpei to fpackage sto project me to sygkekrimeno id?
+        public Response<bool> AddFundingPackage(FundingPackage fundingPackage)//mhpws thelei kai to id gia na mpei to fpackage sto project me to sygkekrimeno id?/epishs xreiazetai auto to function afou exoyme to backproject?
         {
             throw new NotImplementedException();
            // var project = 
         }
 
-        public Response<bool> AddMedia(Photo media)
+        public Response<bool> AddMedia(Photo media)//den exw idea pws kanw add to media sto media list tou project//epishs den volevei na exoume 2 diaforetika functions gia photo kai video?
         {
-            throw new NotImplementedException();
+            var media_ = media;
+            if (media_ == )
+            {
+                
+            }
         }
 
         public Response<bool> AddPost(Post post)
@@ -70,10 +74,30 @@ namespace CrowdFunding.Services
 
         public Response<bool> BackProject(int projectId, int userId, FundingPackage fundingPackage)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var user = _db.Users.FirstOrDefault(u => u.Id == userId);
+            var _fundingPackage = fundingPackage;
+
+            if (_fundingPackage != null)
+            {
+                project.Progress += _fundingPackage.Price;
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "User successfully backed the project."
+                };
+            }
+            else
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 0,
+                    Description = "The project could not be backed."
+                };
         }
 
-        public Response<Project> CreateProject(Project project, int creatorId)//ti paizei me creator id
+        public Response<Project> CreateProject(Project project, int creatorId)//ti paizei me creator id,den yparei pouthena allou
         {
             throw new NotImplementedException();
         }
@@ -135,9 +159,9 @@ namespace CrowdFunding.Services
 
         }
 
-        public Response<Project> ReadProject(int id)
+        public Response<Project> ReadProject(int projectId)
         {
-            var project = _db.Projects.FirstOrDefault(p => p.Id == id);
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
 
             if (project == null)
                 return new Response<Project>
