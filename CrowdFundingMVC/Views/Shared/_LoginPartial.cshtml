@@ -1,0 +1,28 @@
+﻿@using CrowdFunding.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+ 
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <div class="nav-link text-dark">@User.Identity.Name</div>
+    </li>
+    <li class="nav-item">
+         <form  class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{ 
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+    </li>
+ 
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register" asp-method="">Register</a>
+    </li>
+}
+</ul>

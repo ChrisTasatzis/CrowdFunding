@@ -22,7 +22,7 @@ namespace CrowdFunding
                 FirstName = "FirstName1",
                 LastName = "LastName1",
                 Email = "Email1",
-                Password = "Password1"
+                PasswordHash = "Password1"
             };
 
             // Create user successfully

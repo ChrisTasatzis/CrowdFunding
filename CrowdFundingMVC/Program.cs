@@ -1,7 +1,20 @@
+using CrowdFunding.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<CFContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CrowdFundingDB")));
+builder.Services.AddIdentity<User, IdentityRole<int>>(
+        options =>
+        {
+            options.SignIn.RequireConfirmedAccount = false;
+        })
+    .AddEntityFrameworkStores<CFContext>();
+
 
 var app = builder.Build();
 
@@ -18,6 +31,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

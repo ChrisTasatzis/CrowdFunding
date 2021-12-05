@@ -31,7 +31,7 @@ namespace CrowdFunding.Services
                 };
 
             if (user.FirstName == null || user.LastName == null ||
-                user.Email == null || user.Password == null)
+                user.Email == null || user.PasswordHash == null)
             {
                 return new Response<User>
                 {
@@ -119,7 +119,7 @@ namespace CrowdFunding.Services
             if (user.FirstName != null) userDb.FirstName = user.FirstName;
             if (user.LastName != null) userDb.LastName = user.LastName;
             if (user.Email != null) userDb.Email = user.Email;
-            if (user.Password != null) userDb.Password = user.Password;
+            if (user.PasswordHash != null) userDb.PasswordHash = user.PasswordHash;
 
             if (_context.SaveChanges() != 1)
                 return new Response<User>
