@@ -16,7 +16,7 @@ namespace CrowdFunding.Services
         Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber);
         Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber);
         Response<Project> UpdateProject(Project project);
-        Response<bool> DeleteProject(Project project);
+        Response<bool> DeleteProject(int projectId);
         Response<bool> ActivateProject(int projectId);
         Response<bool> DeactivateProject(int projectId);
 
