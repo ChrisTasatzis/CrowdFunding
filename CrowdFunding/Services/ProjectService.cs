@@ -52,7 +52,7 @@ namespace CrowdFunding.Services
             };
         }
 
-        public Response<bool> AddFundingPackage(FundingPackage fundingPackage)//mhpws thelei kai to id gia na mpei to fpackage sto project me to sygkekrimeno id?/epishs xreiazetai auto to function afou exoyme to backproject?
+        public Response<bool> AddFundingPackage(FundingPackage fundingPackage, int projectId)//mhpws thelei kai to id gia na mpei to fpackage sto project me to sygkekrimeno id?/epishs xreiazetai auto to function afou exoyme to backproject?
         {
             throw new NotImplementedException();
            // var project = 
@@ -72,7 +72,7 @@ namespace CrowdFunding.Services
             throw new NotImplementedException();
         }
 
-        public Response<bool> BackProject(int projectId, int userId, FundingPackage fundingPackage)
+        public Response<bool> BackProject(int projectId, int userId, FundingPackage fundingPackage)// na pernaei o backer sto project backers
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var user = _db.Users.FirstOrDefault(u => u.Id == userId);
@@ -97,7 +97,7 @@ namespace CrowdFunding.Services
                 };
         }
 
-        public Response<Project> CreateProject(Project project, int creatorId)//ti paizei me creator id,den yparei pouthena allou
+        public Response<Project> CreateProject(Project project, int userId)//ti paizei me creator id,den yparei pouthena allou
         {
             throw new NotImplementedException();
         }
@@ -214,7 +214,7 @@ namespace CrowdFunding.Services
             throw new NotImplementedException();
         }
 
-        public Response<bool> RemoveMedia(Photo media)
+        public Response<bool> RemoveMedia(Photo media,int  projectId)
         {
             throw new NotImplementedException();
         }
