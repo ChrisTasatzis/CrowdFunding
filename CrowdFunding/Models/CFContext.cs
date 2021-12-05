@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +9,23 @@ using System.Threading.Tasks;
 
 namespace CrowdFunding.Models
 {
-    public class CFContext : DbContext
+    public class CFContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<FundingPackage> FundingPackages { get; set;}
 
+        public CFContext(DbContextOptions options) : base(options) { }
+
+        public CFContext() : base() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             //builder.UseSqlServer("Data Source = localhost; Initial Catalog = CrowdFunding; Integrated Security=true");
             builder.UseSqlServer("Data Source = localhost; Initial Catalog = CrowdFunding; User ID = sa; Password = admin!@#123");
         }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
