@@ -58,7 +58,7 @@ namespace CrowdFunding.Services
            // var project = 
         }
 
-        public Response<bool> AddMedia(Photo media)//den exw idea pws kanw add to media sto media list tou project//epishs den volevei na exoume 2 diaforetika functions gia photo kai video?
+        public Response<bool> AddPhoto(Photo photo, int projectId)//den exw idea pws kanw add to media sto media list tou project//epishs den volevei na exoume 2 diaforetika functions gia photo kai video?
         {
             var media_ = media;
             if (media_ == )
@@ -66,7 +66,11 @@ namespace CrowdFunding.Services
                 
             }
         }
-
+        
+        public Response<bool> AddVideo(Video video, int projectId)
+        {
+            throw new NotImplementedException();
+        }
         public Response<bool> AddPost(Post post)
         {
             throw new NotImplementedException();
@@ -209,17 +213,21 @@ namespace CrowdFunding.Services
             };
         }
 
-        public Response<bool> RemoveFundingPackage(FundingPackage fundingPackage)
+        public Response<bool> RemoveFundingPackage(FundingPackage fundingPackage, int projectId)
         {
             throw new NotImplementedException();
         }
 
-        public Response<bool> RemoveMedia(Photo media,int  projectId)
+        public Response<bool> RemovePhoto(Photo photo,int  projectId)
         {
             throw new NotImplementedException();
         }
 
-        public Response<bool> RemovePost(Post post)
+        public Response<bool> RemoveVideo(Video video, int projectId)
+        {
+            throw new NotImplementedException();
+        }
+        public Response<bool> RemovePost(Post post, int projectId)
         {
             throw new NotImplementedException();
         }
