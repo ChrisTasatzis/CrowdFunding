@@ -14,5 +14,6 @@ namespace CrowdFunding.Services
         Response<Post> ReadPost(int postid);
         Response<bool> DeletePost(int postid);
         Response<Post> UpdatePost(int postid, Post post );
+        public List<Post> ReadAllPosts(int projectId, int pageSize, int pageNumber);
     }
 }

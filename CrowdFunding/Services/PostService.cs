@@ -19,23 +19,24 @@ namespace CrowdFunding.Services
         public Response<Post> CreatePost(Post post, int projectId)
 
         {
-            if (post == null || projectId < 0)
+            var project = _context.Projects.Find(projectId);
+            if (projectId < 0)
             {
                 return new Response<Post>()
                 {
                     Data = null,
-                    Description = "Post was null, please try again",
+                    Description = "Project not found, please try again",
                     StatusCode = 50
                 };
             }
-            post.Project = _context.Projects.Find(projectId);
 
-            _context.Posts.Add(post);
+            List<Post> posts = project.Posts;
+            posts.Add(post);
             if (_context.SaveChanges() == 1) ;
             return new Response<Post>()
             {
                 Data = post,
-                Description = "Post was saved",
+                Description = "Post was saved!",
                 StatusCode = 0
             };
             return new Response<Post>()
@@ -67,11 +68,12 @@ namespace CrowdFunding.Services
 
         public Response<Post> ReadPost(int postId)
         {
-            if (_context.Posts.Find(postId) != null)
+            var post = _context.Posts.FirstOrDefault(p => p.Id == postId);
+            if (post != null)
             {
                 return new Response<Post>()
                 {
-                    Data = _context.Posts.Find(postId),
+                    Data = post,
                     Description = "Post Found",
                     StatusCode = 0
                 };
@@ -87,6 +89,20 @@ namespace CrowdFunding.Services
             }
 
         }
+
+        public List<Post> ReadAllPosts(int projectId, int pageSize, int pageNumber)
+        {
+            var project = _context.Projects.Find(projectId);
+            if (project == null) throw new KeyNotFoundException();
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+            return project.Posts
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+        }
+
 
         public Response<Post> UpdatePost(int postId, Post post)
         {
@@ -104,4 +120,5 @@ namespace CrowdFunding.Services
 
         }
     }
-}
+    }
+

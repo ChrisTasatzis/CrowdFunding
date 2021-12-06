@@ -60,9 +60,9 @@ namespace CrowdFunding.Services
 
         public Response<bool> AddMedia(Photo media)//den exw idea pws kanw add to media sto media list tou project//epishs den volevei na exoume 2 diaforetika functions gia photo kai video?
         {
-            var media_ = media;
-            if (media_ == )
-            {
+           var media_ = media;
+          if (media_ == )
+          {
                 
             }
         }

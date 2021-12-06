@@ -14,6 +14,9 @@ namespace CrowdFunding.Models
         public override DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Video> Videos { get; set; }
+
         public DbSet<FundingPackage> FundingPackages { get; set;}
 
         public CFContext(DbContextOptions options) : base(options) { }
