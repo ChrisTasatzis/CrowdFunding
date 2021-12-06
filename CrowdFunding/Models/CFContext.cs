@@ -65,6 +65,11 @@ namespace CrowdFunding.Models
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
+            builder.Entity<Project>()
+               .HasIndex(u => u.Name)
+               .IsUnique();
+
+
             base.OnModelCreating(builder);
         }
 

@@ -1,0 +1,43 @@
+﻿@using CrowdFunding.Models
+@model Project
+@{
+    var Categories = Category.GetValues(typeof(Category));
+}
+<div class="container mt-3">
+    <h2>Create Project</h2>
+    <form id="account" method="post">
+        <div class="col-3">
+            <div class="mb-3 mt-3">
+                <label asp-for="Name">Name:</label>
+                <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Enter Name" name="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description">Description:</label>
+                <input asp-for="Description" type="text" class="form-control" id="Des" placeholder="Enter Description" name="Description">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Goal">Goal:</label>
+                <input asp-for="Goal" type="number" class="form-control" id="Goal" placeholder="Enter Goal" name="Goal" value="0">
+                <span asp-validation-for="Goal" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Category" for="browser" class="form-label">Choose your browser from the list:</label>
+                <input asp-for="Category" class="form-control" list="browsers" name="browser" id="browser">
+                <datalist id="browsers">
+                    @foreach (var cat in Categories)
+                    {
+                        <option value="@cat" />
+                    }
+                </datalist>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+    </form>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+</div>

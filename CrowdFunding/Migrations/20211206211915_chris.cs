@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrowdFunding.Migrations
 {
-    public partial class initialsetup : Migration
+    public partial class chris : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -164,13 +164,13 @@ namespace CrowdFunding.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
                     Goal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Progress = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false),
-                    ProjectCreatorId = table.Column<int>(type: "int", nullable: false)
+                    Progress = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: true),
+                    ProjectCreatorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,7 +276,7 @@ namespace CrowdFunding.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     BackerId = table.Column<int>(type: "int", nullable: false),
                     FundingPackageId = table.Column<int>(type: "int", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 5, 14, 39, 35, 347, DateTimeKind.Utc).AddTicks(9148))
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 6, 21, 19, 15, 120, DateTimeKind.Utc).AddTicks(1536))
                 },
                 constraints: table =>
                 {
@@ -374,6 +374,12 @@ namespace CrowdFunding.Migrations
                 name: "IX_ProjectBacker_ProjectId",
                 table: "ProjectBacker",
                 column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_Name",
+                table: "Projects",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_ProjectCreatorId",
