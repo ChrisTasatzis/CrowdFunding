@@ -2,44 +2,63 @@
 @model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
-}
+    Layout = "~/Views/Account/_AuthLayout.cshtml"; 
+ }
+
  
-<h1>@ViewData["Title"]</h1>
- 
-<div class="row">
-    <div class="col-md-4">
+<div id="signup" class="container tab-pane "><br>
+              <h3 style="color:silver;">@ViewData["Title"]</h3>
+              <section>
         <form asp-route-returnUrl="index" method="post">
-            <h4>Create a new account.</h4>
+            <h4  style="color:silver;">Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-             <div class="form-group">
+           
+             <div class="form-floating mb-3 mt-3">
+                
+                <input asp-for="FirstName" class="form-control" id="FirstName" placeholder="Enter your First Name" name="FirstName" />
                 <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-             <div class="form-group">
+             <div class="form-floating mb-3 mt-3">
+                
+                <input asp-for="LastName" class="form-control" id="LastName" placeholder="Enter your Last Name" name="LastName" />
                 <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                 <div class="form-floating mb-3 mt-3">
+                
+                <input asp-for="Email" class="form-control" id="Email" placeholder="Enter your email address" name="Email"  />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+
+             
+
+            
+            <div class="form-floating mb-3 mt-3">
+               
+                <input asp-for="Password" class="form-control" id="Password" placeholder="Create a password" name="Password" />
+                 <label asp-for="Password"></label>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-floating mb-3 mt-3">
+                
+                <input asp-for="ConfirmPassword" class="form-control" id="ConfirmPassword" placeholder="Confirm your password" name="Confirmpassword" />
                 <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
+            <!-- Modal footer -->
+             <div class="modal-footer border-0">
             <button type="submit" class="btn btn-primary">Register</button>
+             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+              <div class="center">
+                <p style="color:silver;">Already a KIKCIO Member? <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Login" asp-method="">Sign In</a></p>
+                
+              </div>
         </form>
-    </div>
+    </section>
  
  
 </div>

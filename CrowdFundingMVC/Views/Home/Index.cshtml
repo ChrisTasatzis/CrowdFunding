@@ -19,7 +19,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     var user = (await UserManager.GetUserAsync(User));
-
-    <div class="display-2">Hello @user.FirstName @user.LastName</div>
+   
+    <div style="color:silver;" class="display-2">Hello @user.FirstName @user.LastName</div>
 
 }
