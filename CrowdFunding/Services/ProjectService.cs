@@ -179,7 +179,43 @@ namespace CrowdFunding.Services
 
         public Response<Project> CreateProject(Project project, int userId)
         {
-           project.ProjectCreator.Id = userId;
+           if (project == null)
+            {
+                return new Response<Project>()
+                {
+                    Data = null,
+                    Description =" The project was null ",
+                    StatusCode = 51
+                };
+            }
+           if (project.Name == null)
+            {
+                return new Response<Project>()
+                {
+                    Data = null,
+                    Description = "The inserted project name was null ",
+                    StatusCode = 52
+                };
+            }
+
+            _db.Projects.Add(project);
+            project.ProjectCreator.Id = userId;
+            if (_db.SaveChanges() == 1)
+            {
+                return new Response<Project>() 
+                {
+                    Data = project, 
+                    Description = "Project succesfully created", 
+                    StatusCode = 0 
+                };
+            }
+
+            return new Response<Project>() 
+            { 
+                Data = null, 
+                Description = "Project creation was unsuccesfull", 
+                StatusCode = 50 
+            };
         }
 
         public Response<bool> DeactivateProject(int projectId)
@@ -226,17 +262,19 @@ namespace CrowdFunding.Services
                     Data = false,
                     StatusCode = 10,
                     Description = "No Project with this id exists."
-               };
+                };
             else
+            {
                 _db.Projects.Remove(dbProject);
                 _db.SaveChanges();
-            return new Response<bool>
-            {
-                Data = true,
-                StatusCode = 11,
-                Description = "Project deleted succefully."
-            };
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 11,
+                    Description = "Project deleted succefully."
+                };
 
+            }
         }
 
         public Response<Project> ReadProject(int projectId)
@@ -261,7 +299,12 @@ namespace CrowdFunding.Services
 
         public Response<List<Project>> ReadProject(int pageSize, int pageNumber)
         {
-            throw new NotImplementedException();
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+            return _db.Projects
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
         public Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber)
