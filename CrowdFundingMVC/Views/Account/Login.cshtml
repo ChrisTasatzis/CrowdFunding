@@ -2,41 +2,54 @@
  
 @{
     ViewData["Title"] = "Log in";
+    Layout = "~/Views/Account/_AuthLayout.cshtml";
 }
  
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
+
+<<div id="login" class="container tab-pane  "><br>
+    <h3 style="color:silver;">@ViewData["Title"]</h3>
         <section>
             <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
+                <h4 style="color:silver;">Use a local account to log in.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
+                <div class="form-floating mb-3 mt-3">
+                   
+                    <input asp-for="Email" class="form-control" id="Email" placeholder="Enter Email" name="Email" />
+                     <label asp-for="Email"></label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-floating mb-3 mt-3">
+                    
+                    <input asp-for="Password" class="form-control" id="pwd" placeholder="Enter password" name="Password" />
                     <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <div class="checkbox">
+                <div class="form-check mb-3">
+                    <div style="color:silver;" class="form-check-label">
                         <label asp-for="RememberMe">
                             <input asp-for="RememberMe" />
                             @Html.DisplayNameFor(m => m.RememberMe)
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer border-0">
+
+                <button type="submit" class="btn btn-primary">Log in</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+              <div class="center">
+                <p style="color:silver;">New to KIKCIO?  <a class="nav-link "   asp-area="" asp-controller="Account" asp-action="Register" asp-method="">Sign Up</a>
+              </div>
             </form>
+             
+              
+
         </section>
     </div>
-</div>
+</>
  
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
