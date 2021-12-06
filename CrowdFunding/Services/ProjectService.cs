@@ -52,31 +52,106 @@ namespace CrowdFunding.Services
             };
         }
 
-        public Response<bool> AddFundingPackage(FundingPackage fundingPackage, int projectId)//mhpws thelei kai to id gia na mpei to fpackage sto project me to sygkekrimeno id?/epishs xreiazetai auto to function afou exoyme to backproject?
+        public Response<bool> AddFundingPackage(FundingPackage fundingPackage, int projectId)
         {
-            throw new NotImplementedException();
-           // var project = 
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var fpackage_ = fundingPackage;
+            if (fpackage_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not add the Funding Package."
+                };
+            }
+            else
+            {
+                project.FundingPackages.Add(fpackage_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Funding Package added succesfully."
+                };
+            }
         }
 
-        public Response<bool> AddPhoto(Photo photo, int projectId)//den exw idea pws kanw add to media sto media list tou project//epishs den volevei na exoume 2 diaforetika functions gia photo kai video?
+        public Response<bool> AddPhoto(Photo photo, int projectId)
         {
-            var media_ = media;
-            if (media_ == )
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var media_ = photo;
+            if (media_==null || project == null)
             {
-                
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not add photo."
+                };
+            }
+            else
+            {
+                project.Photos.Add(media_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Photo added succesfully."
+                };
             }
         }
         
         public Response<bool> AddVideo(Video video, int projectId)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var media_ = video;
+            if (media_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not add video."
+                };
+            }
+            else
+            {
+                project.Videos.Add(media_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Photo added succesfully."
+                };
+            }
         }
-        public Response<bool> AddPost(Post post)
+        public Response<bool> AddPost(Post post, int projectId)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var post_ = post;
+            if (post_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not add post."
+                };
+            }
+            else
+            {
+                project.Posts.Add(post_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Post added succesfully."
+                };
+            }
         }
 
-        public Response<bool> BackProject(int projectId, int userId, FundingPackage fundingPackage)// na pernaei o backer sto project backers
+        public Response<bool> BackProject(int projectId, int userId, FundingPackage fundingPackage)
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var user = _db.Users.FirstOrDefault(u => u.Id == userId);
@@ -85,6 +160,7 @@ namespace CrowdFunding.Services
             if (_fundingPackage != null)
             {
                 project.Progress += _fundingPackage.Price;
+                project.Backers.Add(user);
                 return new Response<bool>
                 {
                     Data = true,
@@ -101,9 +177,9 @@ namespace CrowdFunding.Services
                 };
         }
 
-        public Response<Project> CreateProject(Project project, int userId)//ti paizei me creator id,den yparei pouthena allou
+        public Response<Project> CreateProject(Project project, int userId)
         {
-            throw new NotImplementedException();
+           project.ProjectCreator.Id = userId;
         }
 
         public Response<bool> DeactivateProject(int projectId)
@@ -215,24 +291,104 @@ namespace CrowdFunding.Services
 
         public Response<bool> RemoveFundingPackage(FundingPackage fundingPackage, int projectId)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var fpackage_ = fundingPackage;
+            if (fpackage_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not remove the Funding Package."
+                };
+            }
+            else
+            {
+                project.FundingPackages.Remove(fpackage_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Funding Package removed succesfully."
+                };
+            }
         }
 
         public Response<bool> RemovePhoto(Photo photo,int  projectId)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var media_ = photo;
+            if (media_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not remove photo."
+                };
+            }
+            else
+            {
+                project.Photos.Remove(media_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Photo removed succesfully."
+                };
+            }
         }
 
         public Response<bool> RemoveVideo(Video video, int projectId)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var media_ = video;
+            if (media_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not remove video."
+                };
+            }
+            else
+            {
+                project.Videos.Remove(media_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Video removed succesfully."
+                };
+            }
         }
         public Response<bool> RemovePost(Post post, int projectId)
         {
-            throw new NotImplementedException();
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var media_ = post;
+            if (media_ == null || project == null)
+            {
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 10,
+                    Description = "Could not remove post."
+                };
+            }
+            else
+            {
+                project.Posts.Remove(media_);
+                return new Response<bool>
+                {
+                    Data = true,
+                    StatusCode = 0,
+                    Description = "Post removed succesfully."
+                };
+            }
         }
 
-        public Response<Project> UpdateProject(Project project)//mikro thema me ta null edw epeidh xreiazetai kapoio project gia return, epishs kapoia fiels den einai nullable
+        public Response<Project> UpdateProject(Project project)
         {
             if (project == null)
                 return new Response<Project>
