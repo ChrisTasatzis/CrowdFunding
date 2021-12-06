@@ -5,10 +5,21 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+@{
+    var Categories = Category.GetValues(typeof(Category));
+}
+<nav class="navbar navbar-light">
+    @foreach (var category in Categories)
+    {
+        <input type="checkbox" class="btn-check" id="@category" name="@category" autocomplete="off">
+        <label class="btn btn-outline-secondary" for="@category">@category</label>
+    }
+</nav>
+
 @if (SignInManager.IsSignedIn(User))
 {
     var user = (await UserManager.GetUserAsync(User));
-   
+
     <div class="display-2">Hello @user.FirstName @user.LastName</div>
 
 }
