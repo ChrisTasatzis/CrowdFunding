@@ -130,7 +130,6 @@ namespace CrowdFunding.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Thumbnail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("isActive")
@@ -160,7 +159,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 6, 23, 44, 6, 969, DateTimeKind.Utc).AddTicks(289));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 15, 20, 24, 514, DateTimeKind.Utc).AddTicks(7423));
 
                     b.Property<int>("FundingPackageId")
                         .HasColumnType("int");
