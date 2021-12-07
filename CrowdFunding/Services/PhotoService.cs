@@ -18,7 +18,7 @@ namespace CrowdFunding.Services
 
         public Response<Photo> CreatePhoto(Photo photo, int projectId)
         {
-            var project = _context.Projects.Find(projectId);
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
             if (projectId < 0)
             {
                 return new Response<Photo>()
@@ -50,7 +50,7 @@ namespace CrowdFunding.Services
 
         public Response<bool> DeletePhoto(int photoId)
         {
-            var photo = _context.Photos.Find(photoId);
+            var photo = _context.Photos.FirstOrDefault(ph => ph.Id == photoId);
             if (photo == null) return new Response<bool>() { Data = false, Description = "This photo doesn't exist", StatusCode = 50 };
 
             _context.Photos.Remove(photo);
@@ -67,7 +67,7 @@ namespace CrowdFunding.Services
 
         public Response<Photo> GetPhoto(int photoId)
         {
-            var photo = _context.Photos.Find(photoId);
+            var photo = _context.Photos.FirstOrDefault(ph => ph.Id == photoId);
             if (photo == null) return new Response<Photo>() { Data = null, Description = "This photo doesn't exist", StatusCode = 50 };
 
             return new Response<Photo>()

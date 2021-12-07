@@ -20,7 +20,7 @@ namespace CrowdFunding.Services
         public Response<FundingPackage> CreateFundingPackage(FundingPackage fundingpackage, int projectId)
 
         {
-            var project = _context.Projects.Find(projectId);
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
             if (projectId < 0)
             {
                 return new Response<FundingPackage>()
@@ -52,7 +52,7 @@ namespace CrowdFunding.Services
 
         public Response<bool> DeleteFundingPackage(int fundingpackageId)
         {
-            var fundingpackage = _context.FundingPackages.Find(fundingpackageId);
+            var fundingpackage = _context.FundingPackages.FirstOrDefault(f => f.Id == fundingpackageId);
             if (fundingpackage == null) return new Response<bool>() { Data = false, Description = "This funding package doesn't exist", StatusCode = 50 };
 
             _context.FundingPackages.Remove(fundingpackage);
@@ -120,7 +120,7 @@ namespace CrowdFunding.Services
 
         public List<FundingPackage> ReadAllPackages(int projectId, int pageSize, int pageNumber)
         {
-            var project = _context.Projects.Find(projectId);
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
             if (project == null) throw new KeyNotFoundException();
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0 || pageSize > 20) pageSize = 20;

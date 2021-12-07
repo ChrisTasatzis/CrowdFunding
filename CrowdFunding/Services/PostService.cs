@@ -19,7 +19,7 @@ namespace CrowdFunding.Services
         public Response<Post> CreatePost(Post post, int projectId)
 
         {
-            var project = _context.Projects.Find(projectId);
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
             if (projectId < 0)
             {
                 return new Response<Post>()
@@ -51,7 +51,7 @@ namespace CrowdFunding.Services
 
         public Response<bool> DeletePost(int postId)
         {
-            var post = _context.Posts.Find(postId);
+            var post = _context.Posts.FirstOrDefault(p => p.Id == postId);
             if (post == null) return new Response<bool>() { Data = false, Description = "This post doesn't exist", StatusCode = 50 };
 
             _context.Posts.Remove(post);
@@ -92,7 +92,7 @@ namespace CrowdFunding.Services
 
         public List<Post> ReadAllPosts(int projectId, int pageSize, int pageNumber)
         {
-            var project = _context.Projects.Find(projectId);
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
             if (project == null) throw new KeyNotFoundException();
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0 || pageSize > 20) pageSize = 20;
@@ -106,7 +106,7 @@ namespace CrowdFunding.Services
 
         public Response<Post> UpdatePost(int postId, Post post)
         {
-            var _contextPost = _context.Posts.Find(postId);
+            var _contextPost = _context.Posts.FirstOrDefault(p => p.Id == postId);
             if (_contextPost == null) throw new KeyNotFoundException();
             _contextPost.Text = post.Text;
 
