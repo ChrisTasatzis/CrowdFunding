@@ -8,8 +8,8 @@ namespace CrowdFunding.DTO
 {
     public class Response<T>
     {
-        public T Data { get; set; }
+        public T? Data { get; set; }
         public int StatusCode { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }
