@@ -76,6 +76,9 @@ namespace CrowdFunding.Models
                .HasIndex(u => u.Name)
                .IsUnique();
 
+            builder.Entity<Post>()
+                .Property(p => p.DateTime)
+                 .HasDefaultValue(DateTime.UtcNow);
 
             base.OnModelCreating(builder);
         }

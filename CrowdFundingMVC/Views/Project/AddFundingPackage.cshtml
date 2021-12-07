@@ -1,0 +1,21 @@
+﻿@using CrowdFundingMVC.Models.ProjectController
+@model AddFPViewModel
+
+<form asp-action="addfundingpackage">
+    <div class="form-group">
+        <label asp-for="@Model.Name">Name</label>
+        <input type="text" asp-for="@Model.Name" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Price">Price</label>
+        <input type="number" asp-for="@Model.Price" min=0 />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Reward">Name</label>
+        <input type="text" asp-for="@Model.Reward" />
+    </div>
+
+    <input type="hidden" asp-for="@Model.ProjectId" />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -4,6 +4,7 @@ using CrowdFunding.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrowdFunding.Migrations
 {
     [DbContext(typeof(CFContext))]
-    partial class CFContextModelSnapshot : ModelSnapshot
+    [Migration("20211207190840_chris2")]
+    partial class chris2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,9 +87,7 @@ namespace CrowdFunding.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("DateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(8015));
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
@@ -117,7 +117,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(6428));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 19, 8, 40, 30, DateTimeKind.Utc).AddTicks(7136));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -166,7 +166,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(2038));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 19, 8, 40, 30, DateTimeKind.Utc).AddTicks(3022));
 
                     b.Property<int>("FundingPackageId")
                         .HasColumnType("int");

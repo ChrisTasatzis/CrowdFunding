@@ -12,6 +12,9 @@ builder.Services.AddDbContext<CFContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CrowdFundingDB")));
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IFundingPackageService, FundingPackageService>();
+
 builder.Services.AddIdentity<User, IdentityRole<int>>(
         options =>
         {

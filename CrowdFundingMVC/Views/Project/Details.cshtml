@@ -1,18 +1,27 @@
 ﻿@using CrowdFunding.Models
 @using CrowdFundingMVC.Models.ProjectController
 @model DetailsViewModel
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
 
- @{
+@{
     var posts = Model.Project.Posts.Count > 5 ? 5 : Model.Project.Posts.Count;
     Model.Project.Posts.Sort((x, y) => DateTime.Compare(y.DateTime, x.DateTime));
+    var user = await userManager.GetUserAsync(User);
 }
 
-<nav class="navbar navbar-light">
-  <form class="form-inline">
-    <button class="btn btn-outline-primary" type="button" asp-action=>Add Post</button>
-    <button class="btn btn-outline-primary" type="button">Add Photo</button>
-  </form>
-</nav>
+@if (signInManager.IsSignedIn(User))
+{
+    if (Model.Project.ProjectCreator.Id == user.Id)
+    {
+        <nav class="navbar navbar-light">
+            <form class="form-inline">
+                <a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Add Post</a>
+                <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Add Funding Package</a>
+            </form>
+        </nav>
+    }
+}
 
 <div class="blog-single gray-bg">
     <div class="container">
@@ -35,6 +44,41 @@
                     </div>
                     <div class="article-content">
                         <p>@Model.Project.Description</p>
+                    </div>
+
+                     <div class="widget-body">
+                        <h3>Funding Packages</h3>
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-b">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Reward</th>
+                                        <th>Buy</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < @Model.Project.FundingPackages.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@Model.Project.FundingPackages[i].Name</td>
+                                            <td>@Model.Project.FundingPackages[i].Price€</td>
+                                            <td>@Model.Project.FundingPackages[i].Description</td>
+                                             <td>
+                                            <form asp-controller="Project" asp-action="BackProject">
+                                               <input type="submit" value="v" />
+                                               <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id"/>
+                                               <input type="hidden"  asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id"/>
+                                            </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <section class="gallery min-vh">
@@ -95,7 +139,7 @@
                     </div>
                     <div class="widget-body">
 
-                        @for (int i = 0; i<posts; i++)
+                        @for (int i = 0; i < posts; i++)
                         {
 
                             <div class="latest-post-aside media">
@@ -108,7 +152,7 @@
                                 </div>
                             </div>
                         }
-                            
+
                     </div>
                 </div>
                 <!-- End Latest Post -->
@@ -130,14 +174,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for(int i=0; i<Model.BackerFunds.Count; i ++)
+                                    @for (int i = 0; i < Model.BackerFunds.Count; i++)
                                     {
-                                    <tr>
-                                        <td>@(i+1)</td>
-                                        <td>@Model.BackerFunds[i].Backer.FirstName</td>
-                                        <td>@Model.BackerFunds[i].Backer.LastName</td>
-                                        <td>@Model.BackerFunds[i].TotalFunds€</td>
-                                    </tr>
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@Model.BackerFunds[i].Backer.FirstName</td>
+                                            <td>@Model.BackerFunds[i].Backer.LastName</td>
+                                            <td>@Model.BackerFunds[i].TotalFunds€</td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

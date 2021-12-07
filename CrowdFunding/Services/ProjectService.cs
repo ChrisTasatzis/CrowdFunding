@@ -583,5 +583,34 @@ namespace CrowdFunding.Services
                 Description = "OK."
             };
         }
+
+        public Response<bool> BackProject(int projectId, int userId, int fundingPackageId)
+        {
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var user = _db.Users.FirstOrDefault(u => u.Id == userId);
+            var fundingPackage = _db.FundingPackages.FirstOrDefault(f => f.Id == fundingPackageId);
+
+            _db.Set<ProjectBacker>().Add(new ProjectBacker
+            {
+                ProjectId = projectId,
+                BackerId = userId,
+                FundingPackage = fundingPackage
+            });
+
+            if (_db.SaveChanges() != 1)
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 53,
+                    Description = "Could not save changes."
+                };
+
+            return new Response<bool>
+            {
+                Data = true,
+                StatusCode = 0,
+                Description = "User successfully backed the project."
+            };
+        }
     }
 }

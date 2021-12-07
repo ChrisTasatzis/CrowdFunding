@@ -36,5 +36,6 @@ namespace CrowdFunding.Services
         Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration);
 
         Response<List<BackerTotalProjectFunds>> ReadTopBakcers(int projectId, int numOfBackers);
+        Response<bool> BackProject(int projectId, int userId, int fundingPackageId);
     }
 }
