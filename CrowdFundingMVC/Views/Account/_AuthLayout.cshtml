@@ -1,0 +1,59 @@
+﻿
+@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a data-bs-toggle="modal" data-bs-target="#myModal"></a>
+ <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark">
+          <!-- Modal Header -->
+        <div class="modal-header  border-0">
+          <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Login" asp-method="">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link "  asp-area="" asp-controller="Account" asp-action="Register" asp-method=""> Sign up </a>
+            </li>
+
+          </ul>
+          <a asp-area="" asp-controller="Home" asp-action="Index" asp-method="" class="brand" ><img height="60" width="150" src="https://i.postimg.cc/05MrGWyb/logo.png"></a>
+          <a href='~/Home/Index'  type="button"  class="btn btn-close btn-close-white"> </a>
+        </div>
+
+      
+            
+            <div class="modal-body">
+                <div class="container tab-pane active">
+                    @RenderBody()
+                </div>
+            </div>
+   
+        
+        </div>
+    </div>
+</div>
+
+
+
+      @section Scripts{
+    @RenderSection("Scripts", required: false)
+      }
+      <script src="/bootstrap/js/bootstrap.min.js"></script>
+          <script>
+var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+myModal.show()
+</script>
+
+<script type="text/javascript">
+    function ShowPopup() { 
+        $("#btnBS_Modal").click();
+    }
+    $('#myModal').on('hidden.bs.modal', function (e) {
+      window.location = '<%= ResolveUrl("~/Views/Home/Index.cshtml") %>';
+    });
+</script>
+    
+

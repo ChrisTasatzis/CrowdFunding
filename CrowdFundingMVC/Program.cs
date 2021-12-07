@@ -1,6 +1,8 @@
 using CrowdFunding.Models;
+using CrowdFunding.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CFContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CrowdFundingDB")));
+
+builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddIdentity<User, IdentityRole<int>>(
         options =>
         {
@@ -28,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 
 app.UseRouting();
 

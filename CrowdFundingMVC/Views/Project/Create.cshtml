@@ -1,0 +1,50 @@
+﻿@using CrowdFunding.Models
+@using CrowdFundingMVC.Models.ProjectView
+@model CreateViewModel
+@{
+    var Categories = Category.GetValues(typeof(Category));
+}
+<div class="container-fluid mt-3 bg-light">
+    <h2>Create Project</h2>
+    <form id="account" method="post" enctype="multipart/form-data">
+        <div class="col-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="mb-3 mt-3">
+                <label asp-for="Name">Name:</label>
+                <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Enter Name" name="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description">Description:</label>
+                <input asp-for="Description" type="text" class="form-control" id="Des" placeholder="Enter Description" name="Description">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Goal">Goal:</label>
+                <input asp-for="Goal" type="number" class="form-control" id="Goal" placeholder="Enter Goal" name="Goal" value="0" min="1">
+                <span asp-validation-for="Goal" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Category" class="form-label">Choose your browser from the list:</label>
+                <select asp-for="Category" class="form-control" id="Category" name="Category">
+                    @foreach (var cat in Categories)
+                    {
+                         <option value="@((int)cat)">@cat</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label asp-for="Thumbnail" class="form-label">Thumbnail</label>
+                <input asp-for="Thumbnail" type="file" class="form-control-file" id="Thumbnail" name="Thumbnail">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+
+    </form>
+
+</div>
