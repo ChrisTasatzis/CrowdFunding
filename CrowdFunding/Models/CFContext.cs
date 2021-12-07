@@ -80,6 +80,14 @@ namespace CrowdFunding.Models
                 .Property(p => p.DateTime)
                  .HasDefaultValueSql("getdate()");
 
+            builder.Entity<Photo>()
+               .Property(p => p.DateTime)
+                .HasDefaultValueSql("getdate()");
+
+            builder.Entity<Video>()
+               .Property(p => p.DateTime)
+                .HasDefaultValueSql("getdate()");
+
             base.OnModelCreating(builder);
         }
 
