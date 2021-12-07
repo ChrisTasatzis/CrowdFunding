@@ -4,6 +4,7 @@ using CrowdFunding.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrowdFunding.Migrations
 {
     [DbContext(typeof(CFContext))]
-    partial class CFContextModelSnapshot : ModelSnapshot
+    [Migration("20211206232603_chris5")]
+    partial class chris5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,10 +131,6 @@ namespace CrowdFunding.Migrations
                     b.Property<int?>("ProjectCreatorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Thumbnail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool?>("isActive")
                         .HasColumnType("bit");
 
@@ -160,7 +158,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 6, 23, 44, 6, 969, DateTimeKind.Utc).AddTicks(289));
+                        .HasDefaultValue(new DateTime(2021, 12, 6, 23, 26, 3, 326, DateTimeKind.Utc).AddTicks(4264));
 
                     b.Property<int>("FundingPackageId")
                         .HasColumnType("int");

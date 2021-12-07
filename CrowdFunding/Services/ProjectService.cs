@@ -190,7 +190,7 @@ namespace CrowdFunding.Services
                 };
             }
 
-            if(_db.Projects.Where(p => p.Name == project.Name).Count() > 0)
+            if (_db.Projects.Where(p => p.Name == project.Name).Count() > 0)
                 return new Response<Project>()
                 {
                     Data = null,
@@ -304,11 +304,17 @@ namespace CrowdFunding.Services
         {
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0 || pageSize > 20) pageSize = 20;
-            //return _db.Projects
-            //    .Skip((pageNumber - 1) * pageSize)
-            //    .Take(pageSize)
-            //    .ToList();
-            return null;
+            var projects = _db.Projects
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new Response<List<Project>>
+            {
+                Data = projects,
+                StatusCode = 0,
+                Description = "OK."
+            };
         }
 
         public Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber)
@@ -490,6 +496,30 @@ namespace CrowdFunding.Services
                 Data = projectdb,
                 StatusCode = 18,
                 Description = "Project was successfully updated."
+            };
+        }
+
+        public Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration) // not working yet
+        {
+
+             var featured = _db.Set<ProjectBacker>()
+                 .Where(pb => (DateTime.Now - pb.DateTime).TotalDays < duration)
+                 .GroupBy(p => p.ProjectId)
+                 .Select(cl => new
+                 {
+                     projectId = cl.First().ProjectId,
+                     backing = cl.Sum(c => c.FundingPackage.Price)
+                 })
+                 .OrderBy(p => p.backing)
+                 .Take(numOfProejcts)
+                 .Select(p => _db.Projects.First(proj => proj.Id == p.projectId))
+                 .ToList();
+
+            return new Response<List<Project>>
+            {
+                Data = featured,
+                StatusCode = 0,
+                Description = "OK."
             };
         }
     }

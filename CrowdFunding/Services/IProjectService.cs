@@ -32,6 +32,6 @@ namespace CrowdFunding.Services
         Response<bool> AddPost(Post post, int projectId);
         Response<bool> RemovePost(Post post, int projectId);
 
-
+        Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration);
     }
 }

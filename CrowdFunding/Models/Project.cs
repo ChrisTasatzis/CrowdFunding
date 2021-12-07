@@ -18,6 +18,7 @@ namespace CrowdFunding.Models
         public Category Category { get; set; }
         [Required]
         public decimal Goal { get; set; }
+        public string? Thumbnail { get; set; }
         public decimal? Progress { get; set; } = 0;
         public bool? isActive { get; set; } = true;
         public User? ProjectCreator { get; set; }
