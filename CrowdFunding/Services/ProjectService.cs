@@ -561,6 +561,7 @@ namespace CrowdFunding.Services
                     BackerId = cl.First().BackerId,
                     TotalFunds = cl.Sum(c => c.FundingPackage.Price)
                 })
+                .OrderByDescending(cl => cl.TotalFunds)
                 .Take(numOfBackers)
                 .ToList();
 

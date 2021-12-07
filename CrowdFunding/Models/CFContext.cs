@@ -66,7 +66,7 @@ namespace CrowdFunding.Models
 
             builder.Entity<Project>()
             .Property(ap => ap.DateTime)
-                .HasDefaultValue(DateTime.UtcNow);
+                .HasDefaultValueSql("getdate()");
 
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
@@ -78,7 +78,7 @@ namespace CrowdFunding.Models
 
             builder.Entity<Post>()
                 .Property(p => p.DateTime)
-                 .HasDefaultValue(DateTime.UtcNow);
+                 .HasDefaultValueSql("getdate()");
 
             base.OnModelCreating(builder);
         }
