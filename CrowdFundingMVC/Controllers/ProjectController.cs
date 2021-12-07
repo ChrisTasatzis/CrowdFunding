@@ -1,5 +1,6 @@
 ﻿using CrowdFunding.Models;
 using CrowdFunding.Services;
+using CrowdFundingMVC.Models.ProjectController;
 using CrowdFundingMVC.Models.ProjectView;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -27,16 +28,20 @@ namespace CrowdFundingMVC.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Details(int id)
         {
-            var result = _projectService.ReadProject(id);
+            var result = _projectService.ReadProjectComplete(id);
+            var result2 = _projectService.ReadTopBakcers(id, 5);
 
-            if (result.StatusCode == 0)
-                return View(result.Data);
+            if (result.StatusCode == 0 && result2.StatusCode == 0)
+                return View(new DetailsViewModel()
+                {
+                    Project = result.Data,
+                    BackerFunds = result2.Data,
+                });
             else
                 return NotFound();
         }
-
 
         [Authorize]
         public IActionResult Create()

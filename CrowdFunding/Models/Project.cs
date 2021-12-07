@@ -21,6 +21,7 @@ namespace CrowdFunding.Models
         public string? Thumbnail { get; set; }
         public decimal? Progress { get; set; } = 0;
         public bool? isActive { get; set; } = true;
+        public DateTime DateTime { get; set; } 
         public User? ProjectCreator { get; set; }
         public List<User>? Backers { get; set; }
         public List<Post>? Posts { get; set; }

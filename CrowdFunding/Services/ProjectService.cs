@@ -1,5 +1,6 @@
 ﻿using CrowdFunding.DTO;
 using CrowdFunding.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -502,22 +503,82 @@ namespace CrowdFunding.Services
         public Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration) // not working yet
         {
 
-             var featured = _db.Set<ProjectBacker>()
-                 .Where(pb => (DateTime.Now - pb.DateTime).TotalDays < duration)
-                 .GroupBy(p => p.ProjectId)
-                 .Select(cl => new
-                 {
-                     projectId = cl.First().ProjectId,
-                     backing = cl.Sum(c => c.FundingPackage.Price)
-                 })
-                 .OrderBy(p => p.backing)
-                 .Take(numOfProejcts)
-                 .Select(p => _db.Projects.First(proj => proj.Id == p.projectId))
-                 .ToList();
+            var featured = _db.Set<ProjectBacker>()
+                .Where(pb => (DateTime.Now - pb.DateTime).TotalDays < duration)
+                .GroupBy(p => p.ProjectId)
+                .Select(cl => new
+                {
+                    projectId = cl.First().ProjectId,
+                    backing = cl.Sum(c => c.FundingPackage.Price)
+                })
+                .OrderBy(p => p.backing)
+                .Take(numOfProejcts)
+                .Select(p => _db.Projects.First(proj => proj.Id == p.projectId))
+                .ToList();
 
             return new Response<List<Project>>
             {
                 Data = featured,
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+
+        public Response<Project> ReadProjectComplete(int projectId)
+        {
+            var project = _db.Projects.Where(p => p.Id == projectId)
+                .Include(p => p.ProjectCreator)
+                .Include(p => p.Posts)
+                .Include(p => p.FundingPackages)
+                .Include(p => p.Photos)
+                .Include(p => p.Videos)
+                .FirstOrDefault();
+
+            if (project == null)
+                return new Response<Project>
+                {
+                    Data = null,
+                    StatusCode = 10,
+                    Description = "No project with this id exists."
+                };
+
+            return new Response<Project>
+            {
+                Data = project,
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+
+        public Response<List<BackerTotalProjectFunds>> ReadTopBakcers(int projectId, int numOfBackers)
+        {
+            var backerFunds = _db.Set<ProjectBacker>()
+                .Where(pb => pb.ProjectId == projectId)
+                .Include(pb => pb.FundingPackage)
+                .GroupBy(pb => pb.BackerId)
+                .Select(cl => new BackerIdTotalProjectFunds()
+                {
+                    BackerId = cl.First().BackerId,
+                    TotalFunds = cl.Sum(c => c.FundingPackage.Price)
+                })
+                .Take(numOfBackers)
+                .ToList();
+
+            var backers = new List<BackerTotalProjectFunds>();
+
+            foreach (var backerFund in backerFunds)
+            {
+                var user = _db.Users.Find(backerFund.BackerId);
+                backers.Add(new BackerTotalProjectFunds()
+                {
+                    Backer = user,
+                    TotalFunds = backerFund.TotalFunds
+                });
+            }
+
+            return new Response<List<BackerTotalProjectFunds>>
+            {
+                Data = backers,
                 StatusCode = 0,
                 Description = "OK."
             };
