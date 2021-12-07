@@ -15,8 +15,8 @@ namespace CrowdFundingMVC.Controllers
         private readonly IHostEnvironment _hostEnvironment;
 
         public ProjectController(
-            IProjectService projectService, 
-            UserManager<User> userManager, 
+            IProjectService projectService,
+            UserManager<User> userManager,
             ILogger<ProjectController> logger,
             IHostEnvironment hostEnvironment
             )
@@ -25,6 +25,16 @@ namespace CrowdFundingMVC.Controllers
             _userManager = userManager;
             _logger = logger;
             _hostEnvironment = hostEnvironment;
+        }
+
+        public IActionResult Index(int id)
+        {
+            var result = _projectService.ReadProject(id);
+
+            if (result.StatusCode == 0)
+                return View(result.Data);
+            else
+                return NotFound();
         }
 
 
@@ -43,7 +53,7 @@ namespace CrowdFundingMVC.Controllers
                 Console.WriteLine(model);
                 var img = model.Thumbnail;
                 string filePath = null;
-                string thumbnail = null; 
+                string thumbnail = null;
                 if (img != null)
                 {
                     var uniqueFileName = getUniqueFileName(img.FileName);
@@ -60,7 +70,7 @@ namespace CrowdFundingMVC.Controllers
                     Goal = model.Goal,
                     Thumbnail = thumbnail
                 };
-                
+
 
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 var result = _projectService.CreateProject(project, user.Id);
@@ -68,14 +78,14 @@ namespace CrowdFundingMVC.Controllers
 
                 if (result.StatusCode == 0)
                 {
-                    if(filePath != null) img.CopyTo(new FileStream(filePath, FileMode.Create));
+                    if (filePath != null) img.CopyTo(new FileStream(filePath, FileMode.Create));
                     _logger.LogInformation("Project Created");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, result.Description);
-                    return View(project);
+                    return View(model);
                 }
             }
 

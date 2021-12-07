@@ -295,8 +295,8 @@ namespace CrowdFunding.Services
             return new Response<Project>
             {
                 Data = project,
-                StatusCode = 12,
-                Description = "Project Found."
+                StatusCode = 0,
+                Description = "OK."
             };
         }
 

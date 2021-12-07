@@ -1,5 +1,6 @@
 ﻿using CrowdFunding.Services;
 using CrowdFundingMVC.Models;
+using CrowdFundingMVC.Models.HomeController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace CrowdFundingMVC.Controllers
 
         public IActionResult Index()
         {
-            var response =  _projectService.ReadProject(3, 1);
+            var response = _projectService.ReadProject(3, 1);
 
             return View(response.Data);
         }
