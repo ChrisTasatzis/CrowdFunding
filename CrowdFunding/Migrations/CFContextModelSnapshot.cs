@@ -30,6 +30,10 @@ namespace CrowdFunding.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -39,10 +43,6 @@ namespace CrowdFunding.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Reward")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -73,7 +73,7 @@ namespace CrowdFunding.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Photo");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("CrowdFunding.Models.Post", b =>
@@ -115,7 +115,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 16, 9, 5, 212, DateTimeKind.Utc).AddTicks(153));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 18, 46, 38, 910, DateTimeKind.Utc).AddTicks(3089));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -164,7 +164,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 16, 9, 5, 211, DateTimeKind.Utc).AddTicks(4706));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 18, 46, 38, 909, DateTimeKind.Utc).AddTicks(7926));
 
                     b.Property<int>("FundingPackageId")
                         .HasColumnType("int");
@@ -285,7 +285,7 @@ namespace CrowdFunding.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Video");
+                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
