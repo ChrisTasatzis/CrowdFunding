@@ -299,12 +299,32 @@ namespace CrowdFunding.Services
 
         public Response<List<Project>> ReadProject(int pageSize, int pageNumber)
         {
-            if (pageNumber <= 0) pageNumber = 1;
-            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
-            return _db.Projects
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            
+        if (pageNumber <= 0) pageNumber = 1;
+        if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+            
+        _db.Projects
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+            
+            if (_db.Projects.Count() >= 0)
+            {
+                foreach (var project in _db.Projects)
+                    return new Response<List<Project>>
+                    {
+                        Data = project,
+                        StatusCode = 19,
+                        Description = "The projects were succesfully read"
+                    };
+            }
+            else
+                return new Response<List<Project>> 
+                { 
+                    Data = null,
+                    StatusCode = 33,
+                    Description = "The projects were not succesfully read"
+                };
         }
 
         public Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber)
