@@ -1,4 +1,5 @@
 ﻿using CrowdFunding.Models;
+using CrowdFunding.Services;
 using CrowdFundingMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,15 +12,18 @@ namespace CrowdFundingMVC.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<HomeController> _logger;
+        private readonly IUserService _userService;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<HomeController> logger)
+            ILogger<HomeController> logger,
+            IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _userService = userService;
         }
         public IActionResult Index()
         {
@@ -36,9 +40,14 @@ namespace CrowdFundingMVC.Controllers
             return View();
         }
 
-        public IActionResult myaccount()
+        [Authorize]
+        public async Task<IActionResult> MyAccount()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var result = _userService.ReadCompleteUser(user.Id);
+
+            return View(result.Data);
         }
 
         [HttpPost]

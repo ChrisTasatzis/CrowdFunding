@@ -16,6 +16,8 @@ namespace CrowdFundingMVC.Controllers
         private readonly IHostEnvironment _hostEnvironment;
         private readonly IPostService _postService;
         private readonly IFundingPackageService _fundingPackageService;
+        private readonly IPhotoService _photoService;
+        private readonly IVideoService _videoService;
 
         public ProjectController(
             IProjectService projectService,
@@ -23,7 +25,9 @@ namespace CrowdFundingMVC.Controllers
             ILogger<ProjectController> logger,
             IHostEnvironment hostEnvironment,
             IPostService postService,
-            IFundingPackageService fundingPackageService
+            IFundingPackageService fundingPackageService,
+            IPhotoService photoService,
+            IVideoService videoService
             )
         {
             _projectService = projectService;
@@ -32,6 +36,8 @@ namespace CrowdFundingMVC.Controllers
             _hostEnvironment = hostEnvironment;
             _postService = postService;
             _fundingPackageService = fundingPackageService;
+            _photoService = photoService;
+            _videoService = videoService;
         }
 
         public IActionResult Details(int id)
@@ -195,8 +201,8 @@ namespace CrowdFundingMVC.Controllers
         public IActionResult Category(int cat, int page)
         {
 
-            var projects = _projectService.ReadProject((Category)cat, 1, page).Data;
-            var pages = _projectService.GetNumberOfPages((Category)cat, 1).Data;
+            var projects = _projectService.ReadProject((Category)cat, 6, page).Data;
+            var pages = _projectService.GetNumberOfPages((Category)cat, 6).Data;
 
             return View(new CategoryViewModel()
             {
@@ -205,6 +211,22 @@ namespace CrowdFundingMVC.Controllers
                 Pages = pages
             });
         }
+
+
+        [HttpGet("Category/{page:int}")]
+        public IActionResult CategoryAll(int page)
+        {
+
+            var projects = _projectService.ReadProject(6, page).Data;
+            var pages = _projectService.GetNumberOfPages(6).Data;
+
+            return View(new CategoryViewModel()
+            {
+                Projects = projects,
+                Pages = pages
+            });
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Search(string name, int page)
@@ -220,8 +242,124 @@ namespace CrowdFundingMVC.Controllers
             });
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AddPhoto(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            return View(new AddPhotoViewModel()
+            {
+                ProjectId = id
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddPhoto(AddPhotoViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            string filePath = null;
+            string photoUri = null;
+
+            if (model.Photo != null)
+            {
+                var uniqueFileName = getUniqueFileName(model.Photo.FileName);
+                var uploads = Path.Combine(_hostEnvironment.ContentRootPath + "wwwroot", "images");
+                photoUri = "/images/" + uniqueFileName;
+                filePath = Path.Combine(uploads, uniqueFileName);
+            }
+
+            var photo = new Photo()
+            {
+                URI = photoUri,
+            };
+
+            var result = _photoService.CreatePhoto(photo, model.ProjectId);
+
+            if (result.StatusCode == 0)
+            {
+                if (filePath != null) model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                _logger.LogInformation("Photo Saved");
+                return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.Description);
+                return View(model);
+            }
+        }
 
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AddVideo(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            return View(new AddVideoViewModel()
+            {
+                ProjectId = id
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddVideo(AddVideoViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+           var url = "https://www.youtube.com/embed/" + model.URL.Substring(model.URL.Length - 11);
+
+            var video = new Video()
+            {
+                URL = url,
+            };
+
+            var result = _videoService.CreateVideo(video, model.ProjectId);
+
+            if (result.StatusCode == 0)
+            {
+                _logger.LogInformation("Video Saved");
+                return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.Description);
+                return View(model);
+            }
+        }
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            _projectService.DeleteProject(id);
+
+            return RedirectToAction("index", "home");
+        }
 
         private string getUniqueFileName(string fileName)
         {

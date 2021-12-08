@@ -12,6 +12,7 @@ namespace CrowdFunding.Services
     {
         Response<User> CreateUser(User user);
         Response<User> ReadUser(int id);
+        Response<User> ReadCompleteUser(int id);
         Response<User> UpdateUser(User user);
         Response<bool> DeleteUser(int id);
 

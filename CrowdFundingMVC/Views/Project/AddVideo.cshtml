@@ -1,0 +1,11 @@
+﻿@using CrowdFundingMVC.Models.ProjectController
+@model AddVideoViewModel
+
+<form asp-action="AddVideo" enctype="multipart/form-data">
+    <div class="form-group">
+        <input asp-for="@Model.URL" type="text">
+        <input type="hidden" asp-for="@Model.ProjectId" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

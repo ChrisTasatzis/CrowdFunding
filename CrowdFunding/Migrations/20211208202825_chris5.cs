@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrowdFunding.Migrations
 {
-    public partial class gf : Migration
+    public partial class chris5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,6 +32,7 @@ namespace CrowdFunding.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Datetime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -278,7 +279,7 @@ namespace CrowdFunding.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     BackerId = table.Column<int>(type: "int", nullable: false),
                     FundingPackageId = table.Column<int>(type: "int", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 8, 16, 10, 50, 40, DateTimeKind.Utc).AddTicks(2899))
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 8, 20, 28, 25, 659, DateTimeKind.Utc).AddTicks(1797))
                 },
                 constraints: table =>
                 {

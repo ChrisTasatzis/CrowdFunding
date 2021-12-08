@@ -20,7 +20,7 @@ namespace CrowdFundingMVC.Controllers
 
         public IActionResult Index()
         {
-            var response = _projectService.ReadProject(3, 1);
+            var response = _projectService.ReadFeaturedProjects(6, 7);
 
             return View(response.Data);
         }
