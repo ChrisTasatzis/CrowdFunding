@@ -87,7 +87,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(8015));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 22, 22, 31, 186, DateTimeKind.Utc).AddTicks(7012));
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
@@ -117,7 +117,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(6428));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 22, 22, 31, 186, DateTimeKind.Utc).AddTicks(5700));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -166,7 +166,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(2038));
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 22, 22, 31, 186, DateTimeKind.Utc).AddTicks(1211));
 
                     b.Property<int>("FundingPackageId")
                         .HasColumnType("int");
