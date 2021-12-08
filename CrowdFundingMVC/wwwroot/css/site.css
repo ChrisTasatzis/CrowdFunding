@@ -218,11 +218,18 @@ body {
     vertical-align: top;
 }
 
-.blog-aside .widget-body {
+.widget-body {
+    color: floralwhite;
+
+}
+
+.blog-aside  {
+    color: floralwhite;
     padding: 15px;
 }
 
 .blog-aside .widget-title {
+    color: floralwhite;
     padding: 15px;
     border-bottom: 1px solid floralwhite;
 }
@@ -234,33 +241,13 @@ body {
         margin: 0;
     }
 
-.blog-aside .widget-author .media {
-    margin-bottom: 15px;
-}
 
-.blog-aside .widget-author p {
-    font-size: 16px;
-    margin: 0;
-}
 
-.blog-aside .widget-author .avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.blog-aside .widget-author h6 {
-    font-weight: 600;
-    color: rgba(250, 250, 250, 0.8);
-    ;
-    font-size: 22px;
-    margin: 0;
-    padding-left: 20px;
 }
 
 .blog-aside .post-aside {
     margin-bottom: 15px;
+    color: rgba(250, 250, 250, 0.8);
 }
 
     .blog-aside .post-aside .post-aside-title h5 {
@@ -304,17 +291,19 @@ body {
 }
 
 .blog-aside .latest-post-aside .lpa-title h5 {
+    color: rgba(250, 250, 250, 0.8);
     margin: 0;
     font-size: 15px;
 }
 
 .blog-aside .latest-post-aside .lpa-title a {
+    
     color: rgba(250, 250, 250, 0.8);
     font-weight: 600;
 }
 
 .blog-aside .latest-post-aside .lpa-meta a {
-    color: #6F8BA4;
+    color: rgba(250, 250, 250, 0.8);
     font-size: 12px;
     text-transform: uppercase;
     display: inline-block;
@@ -322,6 +311,7 @@ body {
 }
 
 .tag-cloud a {
+    color: rgba(250, 250, 250, 0.8);
     padding: 4px 15px;
     font-size: 13px;
     color: grey;
@@ -346,11 +336,17 @@ body {
     margin: 15px 0 30px;
 }
 
+.article-content {
+    color: floralwhite;
+}
+
     .article .article-title {
+        color: floralwhite;
         padding: 15px 0 20px;
     }
 
         .article .article-title h6 {
+            color: floralwhite;
             font-size: 14px;
             font-weight: 700;
             margin-bottom: 20px;
@@ -382,6 +378,7 @@ body {
 
             .article .article-title .media .media-body {
                 padding-left: 8px;
+                color: floralwhite;
             }
 
                 .article .article-title .media .media-body label {
@@ -393,6 +390,7 @@ body {
                 .article .article-title .media .media-body span {
                     display: block;
                     font-size: 12px;
+                    color: floralwhite;
                 }
 
     .article .article-content h1,
@@ -407,6 +405,7 @@ body {
     }
 
     .article .article-content blockquote {
+        color: floralwhite;
         max-width: 600px;
         padding: 15px 0 30px 0;
         margin: 0;
@@ -426,6 +425,7 @@ body {
 
             .article .article-content blockquote .blockquote-footer cite {
                 font-weight: 600;
+                color: floralwhite;
             }
 
     .article .tag-cloud {

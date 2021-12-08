@@ -12,6 +12,7 @@ namespace CrowdFunding.Services
     {
         Response<Project> CreateProject(Project project, int creatorId);
         Response<Project> ReadProject(int projectId);
+        Response<Project> ReadProjectComplete(int projectId);
         Response<List<Project>> ReadProject(int pageSize, int pageNumber);
         Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber);
         Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber);
@@ -33,5 +34,8 @@ namespace CrowdFunding.Services
         Response<bool> RemovePost(Post post, int projectId);
 
         Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration);
+
+        Response<List<BackerTotalProjectFunds>> ReadTopBakcers(int projectId, int numOfBackers);
+        Response<bool> BackProject(int projectId, int userId, int fundingPackageId);
     }
 }

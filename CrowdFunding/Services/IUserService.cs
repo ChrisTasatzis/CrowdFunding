@@ -14,7 +14,6 @@ namespace CrowdFunding.Services
         Response<User> ReadUser(int id);
         Response<User> UpdateUser(User user);
         Response<bool> DeleteUser(int id);
-        Response<bool> BackProject(int projectId, int userId, int fundingPackageId);
 
     }
 }

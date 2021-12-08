@@ -1,5 +1,6 @@
 ﻿using CrowdFunding.Models;
 using CrowdFunding.Services;
+using CrowdFundingMVC.Models.ProjectController;
 using CrowdFundingMVC.Models.ProjectView;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,28 +14,123 @@ namespace CrowdFundingMVC.Controllers
         private readonly UserManager<User> _userManager;
         private readonly ILogger<ProjectController> _logger;
         private readonly IHostEnvironment _hostEnvironment;
+        private readonly IPostService _postService;
+        private readonly IFundingPackageService _fundingPackageService;
 
         public ProjectController(
             IProjectService projectService,
             UserManager<User> userManager,
             ILogger<ProjectController> logger,
-            IHostEnvironment hostEnvironment
+            IHostEnvironment hostEnvironment,
+            IPostService postService,
+            IFundingPackageService fundingPackageService
             )
         {
             _projectService = projectService;
             _userManager = userManager;
             _logger = logger;
             _hostEnvironment = hostEnvironment;
+            _postService = postService;
+            _fundingPackageService = fundingPackageService;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Details(int id)
         {
-            var result = _projectService.ReadProject(id);
+            var result = _projectService.ReadProjectComplete(id);
+            var result2 = _projectService.ReadTopBakcers(id, 5);
 
-            if (result.StatusCode == 0)
-                return View(result.Data);
+            if (result.StatusCode == 0 && result2.StatusCode == 0)
+                return View(new DetailsViewModel()
+                {
+                    Project = result.Data,
+                    BackerFunds = result2.Data,
+                });
             else
                 return NotFound();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AddPost(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            return View(new AddPostViewModel()
+            {
+                ProjectId = id
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddPost(AddPostViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            _postService.CreatePost(new Post()
+            {
+                Text = model.Text
+            }, model.ProjectId);
+
+            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AddFundingPackage(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            return View(new AddFPViewModel()
+            {
+                ProjectId = id
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddFundingPackage(AddFPViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+
+            if (creatorId != user)
+                return RedirectToAction("index", "home");
+
+            _fundingPackageService.CreateFundingPackage(new FundingPackage()
+            {
+                Name = model.Name,
+                Price = model.Price,
+                Description = model.Reward
+            }, model.ProjectId);
+
+            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> BackProject(DetailsViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var projectId = model.ProjectId;
+            var fundingPackageId = model.FundingPackageId;
+
+            _projectService.BackProject(projectId, user.Id, fundingPackageId);
+
+
+
+            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
         }
 
 

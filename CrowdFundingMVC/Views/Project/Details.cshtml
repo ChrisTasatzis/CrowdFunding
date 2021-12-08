@@ -1,0 +1,216 @@
+﻿@using CrowdFunding.Models
+@using CrowdFundingMVC.Models.ProjectController
+@model DetailsViewModel
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+
+@{
+    var posts = Model.Project.Posts.Count > 5 ? 5 : Model.Project.Posts.Count;
+    Model.Project.Posts.Sort((x, y) => DateTime.Compare(y.DateTime, x.DateTime));
+    var user = await userManager.GetUserAsync(User);
+}
+
+@if (signInManager.IsSignedIn(User))
+{
+    if (Model.Project.ProjectCreator.Id == user.Id)
+    {
+       
+        
+<!-- Toggle Button -->
+<button class="btn btn-danger mx-auto my-5 d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenus">
+    Click On me
+</button>
+
+<div class="offcanvas offcanvas-start navbar-dark bg-dark" id="offcanvasMenus" style="width: 200px;">
+    <!-- Sidebar Header -->
+    <div class="border-bottom p-4 mb-4 shadow-sm">
+        <a href="#"><img src="" alt="..." class="img-fluid w-50"></a>
+        <button type="button" class="btn-close float-end text-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <!-- Navbar Menus Links -->
+    <nav class="nav justify-content-center">
+      <form class="form-inline ">
+        <a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Post</a>
+        <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Funding Package</a>
+        <a class="btn btn-primary mt-3">Edit</a>
+        <a class="btn btn-primary mt-3">Delete</a>
+      </form>
+  </nav>
+</div>
+     }
+}     
+        
+       
+  
+
+<div class="blog-single gray-bg">
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-lg-8 m-15px-tb">
+                <article class="article">
+                    <div class="article-img">
+                        <img src="@Model.Project.Thumbnail" title="" alt="">
+                    </div>
+                    <div class="article-title">
+                        <h6><a href="#">@Model.Project.Category</a></h6>
+                        <h2>@Model.Project.Name</h2>
+                        <div class="media">
+
+                            <div class="media-body">
+                                <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
+                                <span>On @Model.Project.DateTime.ToString()</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-content">
+                        <p>@Model.Project.Description</p>
+                    </div>
+
+                     <div class="widget-body">
+                        <h3>Funding Packages</h3>
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-b">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Reward</th>
+                                        <th>Buy</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < @Model.Project.FundingPackages.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@Model.Project.FundingPackages[i].Name</td>
+                                            <td>@Model.Project.FundingPackages[i].Price€</td>
+                                            <td>@Model.Project.FundingPackages[i].Description</td>
+                                             <td>
+                                            <form asp-controller="Project" asp-action="BackProject">
+                                               <input type="submit" value="v" />
+                                               <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id"/>
+                                               <input type="hidden"  asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id"/>
+                                            </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <section class="gallery min-vh">
+                        <div class="container">
+                            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-md-3">
+                                <div class="col">
+                                    <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
+                                         alt="gallery">
+                                </div>
+                                <div class="col">
+                                    <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
+                                         alt="gallery">
+                                </div>
+                                <div class="col">
+                                    <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
+                                         alt="gallery">
+                                </div>
+                                <div class="col">
+                                    <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
+                                         alt="gallery">
+                                </div>
+                                <div class="col">
+                                    <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
+                                         alt="gallery">
+                                </div>
+                                <div class="col">
+                                    <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
+                                         alt="gallery">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="img/1.jpg" class="modal-img" alt="modal img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+            </div>
+            <div class="col-lg-4 m-15px-tb blog-aside">
+                <!-- Latest Posts -->
+                <div class="widget widget-latest-post">
+                    <div class="widget-title">
+                        <h3>Latest Post</h3>
+                    </div>
+                    <div class="widget-body">
+
+                        @for (int i = 0; i < posts; i++)
+                        {
+
+                            <div class="latest-post-aside media">
+                                <div class="lpa-left media-body">
+                                    <div class="lpa-title">
+                                        <h5>@Model.Project.Posts[i].Text</h5>
+                                    </div>
+                                    <span>By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </span>
+                                    <span>On @Model.Project.Posts[i].DateTime</span>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <!-- End Latest Post -->
+                <!-- widget Tags -->
+                <div class="widget widget-tags">
+                    <div class="widget-title">
+                        <h3>Top Backers</h3>
+                    </div>
+                    <div class="widget-body">
+
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-b">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Funded</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.BackerFunds.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@Model.BackerFunds[i].Backer.FirstName</td>
+                                            <td>@Model.BackerFunds[i].Backer.LastName</td>
+                                            <td>@Model.BackerFunds[i].TotalFunds€</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End widget Tags -->
+        </div>
+    </div>
+</div>

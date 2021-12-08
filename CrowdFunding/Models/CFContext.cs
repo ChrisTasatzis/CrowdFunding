@@ -64,6 +64,10 @@ namespace CrowdFunding.Models
              .HasMany(p => p.Videos)
              .WithOne(p => p.Project);
 
+            builder.Entity<Project>()
+            .Property(ap => ap.DateTime)
+                .HasDefaultValue(DateTime.UtcNow);
+
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
@@ -72,6 +76,9 @@ namespace CrowdFunding.Models
                .HasIndex(u => u.Name)
                .IsUnique();
 
+            builder.Entity<Post>()
+                .Property(p => p.DateTime)
+                 .HasDefaultValue(DateTime.UtcNow);
 
             base.OnModelCreating(builder);
         }

@@ -36,6 +36,11 @@ namespace CrowdFundingMVC.Controllers
             return View();
         }
 
+        public IActionResult myaccount()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

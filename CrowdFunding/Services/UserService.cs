@@ -167,19 +167,6 @@ namespace CrowdFunding.Services
             };
         }
 
-        public Response<bool> BackProject(int projectId, int userId, int fundingPackageId)
-        {
-            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            var fundingPackage = _context.FundingPackages.FirstOrDefault(f => f.Id == fundingPackageId);
-
-
-            return new Response<bool>
-            {
-                Data = true,
-                StatusCode = 0,
-                Description = "User successfully backed the project."
-            };
-        }
+      
     }
 }
