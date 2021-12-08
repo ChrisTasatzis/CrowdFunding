@@ -201,8 +201,8 @@ namespace CrowdFundingMVC.Controllers
         public IActionResult Category(int cat, int page)
         {
 
-            var projects = _projectService.ReadProject((Category)cat, 1, page).Data;
-            var pages = _projectService.GetNumberOfPages((Category)cat, 1).Data;
+            var projects = _projectService.ReadProject((Category)cat, 6, page).Data;
+            var pages = _projectService.GetNumberOfPages((Category)cat, 6).Data;
 
             return View(new CategoryViewModel()
             {
@@ -211,6 +211,22 @@ namespace CrowdFundingMVC.Controllers
                 Pages = pages
             });
         }
+
+
+        [HttpGet("Category/{page:int}")]
+        public IActionResult CategoryAll(int page)
+        {
+
+            var projects = _projectService.ReadProject(6, page).Data;
+            var pages = _projectService.GetNumberOfPages(6).Data;
+
+            return View(new CategoryViewModel()
+            {
+                Projects = projects,
+                Pages = pages
+            });
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Search(string name, int page)

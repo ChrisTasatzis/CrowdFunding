@@ -674,6 +674,20 @@ namespace CrowdFunding.Services
                 Description = "OK."
             };
         }
+
+        public Response<int> GetNumberOfPages(int pageSize)
+        {
+            var numOfProjects = _db.Projects
+                .Count();
+
+            return new Response<int>
+            {
+                Data = (int)Math.Ceiling((decimal)numOfProjects / pageSize),
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+
         public Response<int> GetNumberOfPages(string name, int pageSize)
         {
             var numOfProjects = _db.Projects

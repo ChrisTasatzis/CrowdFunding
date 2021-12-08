@@ -59,6 +59,9 @@
         <div class="container ">
             <div class="row row-header  align-items-center">
                 <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                            <a class="nav-link nav-link-icon" asp-controller="Project" asp-action="CategoryAll" asp-route-page="1">All</a>
+                    </li>
                     @foreach (var category in Categories)
                     {
                         <li class="nav-item">

@@ -39,6 +39,7 @@ namespace CrowdFunding.Services
         Response<bool> BackProject(int projectId, int userId, int fundingPackageId);
 
         Response<int> GetNumberOfPages(Category category, int pageSize);
+        Response<int> GetNumberOfPages(int pageSize);
         Response<int> GetNumberOfPages(string name, int pageSize);
     }
 }
