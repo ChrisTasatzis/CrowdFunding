@@ -58,7 +58,7 @@ namespace CrowdFunding.Services
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var fpackage_ = fundingPackage;
-            if (fpackage_ == null || project == null)
+            if (fpackage_ == null || project == null || project.FundingPackages == null)
             {
                 return new Response<bool>
                 {
@@ -83,7 +83,7 @@ namespace CrowdFunding.Services
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var media_ = photo;
-            if (media_ == null || project == null)
+            if (media_ == null || project == null || project.Photos == null)
             {
                 return new Response<bool>
                 {
@@ -108,7 +108,7 @@ namespace CrowdFunding.Services
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var media_ = video;
-            if (media_ == null || project == null)
+            if (media_ == null || project == null || project.Videos == null)
             {
                 return new Response<bool>
                 {
@@ -132,7 +132,7 @@ namespace CrowdFunding.Services
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var post_ = post;
-            if (post_ == null || project == null)
+            if (post_ == null || project == null || project.Posts == null)
             {
                 return new Response<bool>
                 {
@@ -159,7 +159,7 @@ namespace CrowdFunding.Services
             var user = _db.Users.FirstOrDefault(u => u.Id == userId);
             var _fundingPackage = fundingPackage;
 
-            if (_fundingPackage != null)
+            if (_fundingPackage != null && project != null && project.Backers != null && user != null)
             {
                 project.Progress += _fundingPackage.Price;
                 project.Backers.Add(user);

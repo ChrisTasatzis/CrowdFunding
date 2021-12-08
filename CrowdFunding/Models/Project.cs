@@ -11,13 +11,13 @@ namespace CrowdFunding.Models
     {
         public int? Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         [Required]
-        public decimal Goal { get; set; }
+        public decimal? Goal { get; set; }
         public string? Thumbnail { get; set; }
         public decimal? Progress { get; set; } = 0;
         public bool? isActive { get; set; } = true;
