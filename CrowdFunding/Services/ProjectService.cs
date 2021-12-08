@@ -356,9 +356,7 @@ namespace CrowdFunding.Services
             };
 
         }
-
        
-
         public Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber)
         {
             
