@@ -14,14 +14,35 @@
 {
     if (Model.Project.ProjectCreator.Id == user.Id)
     {
-        <nav class="navbar navbar-light">
-            <form class="form-inline">
-                <a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Add Post</a>
-                <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Add Funding Package</a>
-            </form>
-        </nav>
-    }
-}
+       
+        
+<!-- Toggle Button -->
+<button class="btn btn-danger mx-auto my-5 d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenus">
+    Click On me
+</button>
+
+<div class="offcanvas offcanvas-start navbar-dark bg-dark" id="offcanvasMenus" style="width: 200px;">
+    <!-- Sidebar Header -->
+    <div class="border-bottom p-4 mb-4 shadow-sm">
+        <a href="#"><img src="" alt="..." class="img-fluid w-50"></a>
+        <button type="button" class="btn-close float-end text-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <!-- Navbar Menus Links -->
+    <nav class="nav justify-content-center">
+      <form class="form-inline ">
+        <a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Post</a>
+        <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Funding Package</a>
+        <a class="btn btn-primary mt-3">Edit</a>
+        <a class="btn btn-primary mt-3">Delete</a>
+      </form>
+  </nav>
+</div>
+     }
+}     
+        
+       
+  
 
 <div class="blog-single gray-bg">
     <div class="container">

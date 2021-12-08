@@ -89,7 +89,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2021, 12, 7, 20, 40, 59, 902, DateTimeKind.Utc).AddTicks(8015));
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");

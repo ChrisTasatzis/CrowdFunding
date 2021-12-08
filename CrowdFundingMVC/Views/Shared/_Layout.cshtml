@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-12 col-sm-3 ">
                     <form class="form-inline" asp-area="" asp-controller="Project" asp-action="Create" method="get">
-                        <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" title="Almost There!">
+                        <button type="submit" id = "tooltip" class="btn btn-primary" data-toggle="tooltip" title="Almost There!">
                             Start a new Project right away!
                         </button>
                     </form>
@@ -165,6 +165,8 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
+    
+    </script>
+   
 </body>
 </html>
