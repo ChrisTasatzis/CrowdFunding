@@ -13,6 +13,3 @@ document.addEventListener("click", function (e) {
     }
 })
 
-
-var tooltipElement = document.getElementById('tooltip');
-var tooltip = new bootstrap.Tooltip(tooltipElement);

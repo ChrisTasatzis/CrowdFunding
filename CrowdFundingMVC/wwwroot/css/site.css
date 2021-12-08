@@ -87,7 +87,6 @@ body {
     text-decoration: none;
     transition: all .4s ease;
 }
-
     .btn-proj:hover, .btn-proj:focus {
         background: var(--gradient) !important;
         background-clip: none !important;
@@ -98,14 +97,38 @@ body {
         text-decoration: underline;
     }
 
+.btn-proj1 {
+    border: 5px solid;
+    border-image-slice: 1;
+    background: var(--gradient) !important;
+    background-clip: text !important;
+    background-color: #222222;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    border-image-source: var(--gradient) !important;
+    text-decoration: none;
+    transition: all .4s ease;
+}
+
+
+    .btn-proj1:hover, .btn-proj:focus {
+        background: var(--gradient) !important;
+        background-clip: none !important;
+        -webkit-background-clip: none !important;
+        -webkit-text-fill-color: #fff !important;
+        border: 5px solid #fff !important;
+        box-shadow: #222 1px 0 10px;
+        text-decoration: underline;
+    }
+
 .badge span {
-    background-color: #fffbec;
-    width: 60px;
+    background-color: #50C878;
+    width: 90px;
     height: 25px;
     padding-bottom: 3px;
     border-radius: 5px;
     display: flex;
-    color: #fed85d;
+    color: #355E3B;
     justify-content: center;
     align-items: center
 }

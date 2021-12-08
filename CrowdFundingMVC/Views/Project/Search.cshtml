@@ -2,10 +2,9 @@
 @using CrowdFundingMVC.Models.ProjectController
 @{
     ViewData["Title"] = "Home Page";
-    var category = Model.Category;
 }
 
-@model CategoryViewModel
+@model SearchViewModel
 
 
 <div class="row">
@@ -49,7 +48,12 @@
             @for (int i = 0; i < Model.Pages; i++)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Project" asp-action="Category" asp-route-cat="@((int)category)" asp-route-page="@(i+1)">@(i+1)</a>
+
+                    <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2">
+                        <input type="hidden" name="name" value="@Model.SearchTerm" />
+                        <input type="hidden" name="page" value="@(i+1)" />
+                        <button type="submit" class="page-link">@(i+1)</button>
+                    </form>
                 </li>
             }
         </ul>

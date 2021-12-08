@@ -341,7 +341,6 @@ namespace CrowdFunding.Services
         {
 
             if (pageNumber <= 0) pageNumber = 1;
-            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
 
             List<Project> projects =
             _db.Projects
@@ -653,6 +652,19 @@ namespace CrowdFunding.Services
         {
             var numOfProjects = _db.Projects
                 .Where(project => project.Category == category)
+                .Count();
+
+            return new Response<int>
+            {
+                Data = (int)Math.Ceiling((decimal)numOfProjects / pageSize),
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+        public Response<int> GetNumberOfPages(string name, int pageSize)
+        {
+            var numOfProjects = _db.Projects
+                .Where(project => project.Name.Contains(name))
                 .Count();
 
             return new Response<int>

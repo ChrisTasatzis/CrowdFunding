@@ -1,8 +1,8 @@
-
-using CrowdFundingAPI;
-using CrowdFundingAPI.Services;
 using CrowdFunding.Models;
 using Microsoft.EntityFrameworkCore;
+using CrowdFundingAPI;
+using CrowdFundingAPI.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +12,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<CFContext>
-    (options => options.UseSqlServer("Server = localhost; Initial Catalog = CrowdFunding; User ID = sa; Password = admin!@#123"));
+builder.Services.AddDbContext<CFContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CrowdFundingDB")));
 
 var app = builder.Build();
 

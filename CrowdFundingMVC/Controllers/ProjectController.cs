@@ -195,13 +195,27 @@ namespace CrowdFundingMVC.Controllers
         public IActionResult Category(int cat, int page)
         {
 
-            var projects = _projectService.ReadProject((Category)cat, 9, page).Data;
-            var pages = _projectService.GetNumberOfPages((Category)cat, 9).Data;
+            var projects = _projectService.ReadProject((Category)cat, 1, page).Data;
+            var pages = _projectService.GetNumberOfPages((Category)cat, 1).Data;
 
             return View(new CategoryViewModel()
             {
                 Projects = projects,
                 Category = cat,
+                Pages = pages
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string name, int page)
+        {
+            var projects = _projectService.ReadProject(name, 6, page).Data;
+            var pages = _projectService.GetNumberOfPages(name, 6).Data;
+
+            return View(new SearchViewModel()
+            {
+                Projects = projects,
+                SearchTerm = name,
                 Pages = pages
             });
         }
