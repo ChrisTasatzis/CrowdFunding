@@ -1,5 +1,7 @@
 ﻿using CrowdFunding.DTO;
 using CrowdFunding.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace CrowdFunding.Services
 {
@@ -70,6 +72,30 @@ namespace CrowdFunding.Services
         public Response<User> ReadUser(int id)
         {
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+                return new Response<User>
+                {
+                    Data = null,
+                    StatusCode = 50,
+                    Description = "No user with this id exists."
+                };
+
+            return new Response<User>
+            {
+                Data = user,
+                StatusCode = 0,
+                Description = "User Found."
+            };
+
+        }
+
+        public Response<User> ReadCompleteUser(int id)
+        {
+            var user = _context.Users
+                .Include(u => u.CreatedProjects)
+                .Include(u => u.BackedProjects)
+                .FirstOrDefault(u => u.Id == id);
 
             if (user == null)
                 return new Response<User>

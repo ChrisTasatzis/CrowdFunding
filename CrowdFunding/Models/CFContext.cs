@@ -17,7 +17,7 @@ namespace CrowdFunding.Models
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Video> Videos { get; set; }
 
-        public DbSet<FundingPackage> FundingPackages { get; set;}
+        public DbSet<FundingPackage> FundingPackages { get; set; }
 
         public CFContext(DbContextOptions options) : base(options) { }
 
@@ -71,6 +71,10 @@ namespace CrowdFunding.Models
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            builder.Entity<User>()
+                .Property(u => u.Datetime)
+                .HasDefaultValueSql("getdate()");
 
             builder.Entity<Project>()
                .HasIndex(u => u.Name)

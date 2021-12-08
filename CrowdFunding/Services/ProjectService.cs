@@ -534,19 +534,32 @@ namespace CrowdFunding.Services
 
         public Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration) // not working yet
         {
+            var time = DateTime.Now.AddDays(-duration);
 
-            var featured = _db.Set<ProjectBacker>()
-                .Where(pb => (DateTime.Now - pb.DateTime).TotalDays < duration)
+            var featuredPB = _db.Set<ProjectBacker>()
+                .Where(pb => pb.DateTime >= time)
                 .GroupBy(p => p.ProjectId)
-                .Select(cl => new
+                .Select(cl => new ProjectFunds
                 {
-                    projectId = cl.First().ProjectId,
-                    backing = cl.Sum(c => c.FundingPackage.Price)
+                    ProjectId = cl.First().ProjectId,
+                    TotalFunds = cl.Sum(c => c.FundingPackage.Price)
                 })
-                .OrderBy(p => p.backing)
+                .OrderByDescending(p => p.TotalFunds)
                 .Take(numOfProejcts)
-                .Select(p => _db.Projects.First(proj => proj.Id == p.projectId))
                 .ToList();
+
+            var featured = new List<Project>();
+            foreach (var pb in featuredPB)
+            {
+                var project = _db.Projects.First(p => p.Id == pb.ProjectId);
+                featured.Add(project);
+            }
+
+            if(featured.Count < numOfProejcts)
+            {
+                var nonFunded = _db.Projects.Where(p => p.Progress == 0).Take(numOfProejcts - featured.Count).ToList();
+                featured.AddRange(nonFunded);
+            }
 
             return new Response<List<Project>>
             {
@@ -676,3 +689,4 @@ namespace CrowdFunding.Services
         }
     }
 }
+

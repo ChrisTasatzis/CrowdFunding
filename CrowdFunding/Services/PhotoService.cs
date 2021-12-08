@@ -29,15 +29,16 @@ namespace CrowdFunding.Services
                 };
             }
 
-            List<Photo> photos = project.Photos;
-            photos.Add(photo);
-            if (_context.SaveChanges() == 1) ;
-            return new Response<Photo>()
-            {
-                Data = photo,
-                Description = "Photo was saved!",
-                StatusCode = 0
-            };
+            project.Photos.Add(photo);
+
+            if (_context.SaveChanges() == 1)
+                return new Response<Photo>()
+                {
+                    Data = photo,
+                    Description = "Photo was saved!",
+                    StatusCode = 0
+                };
+
             return new Response<Photo>()
             {
                 Data = null,

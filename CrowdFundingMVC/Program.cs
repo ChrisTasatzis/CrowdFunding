@@ -14,6 +14,11 @@ builder.Services.AddDbContext<CFContext>(options =>
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IFundingPackageService, FundingPackageService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<IVideoService, VideoService>();
+
+
 
 builder.Services.AddIdentity<User, IdentityRole<int>>(
         options =>
