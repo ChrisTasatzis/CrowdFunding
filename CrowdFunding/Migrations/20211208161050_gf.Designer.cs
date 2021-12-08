@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrowdFunding.Migrations
 {
     [DbContext(typeof(CFContext))]
-    [Migration("20211207225028_chris5")]
-    partial class chris5
+    [Migration("20211208161050_gf")]
+    partial class gf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,7 +170,7 @@ namespace CrowdFunding.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 7, 22, 50, 28, 607, DateTimeKind.Utc).AddTicks(3302));
+                        .HasDefaultValue(new DateTime(2021, 12, 8, 16, 10, 50, 40, DateTimeKind.Utc).AddTicks(2899));
 
                     b.Property<int>("FundingPackageId")
                         .HasColumnType("int");

@@ -171,7 +171,7 @@ namespace CrowdFunding.Migrations
                     Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Progress = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     isActive = table.Column<bool>(type: "bit", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 7, 22, 22, 31, 186, DateTimeKind.Utc).AddTicks(5700)),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     ProjectCreatorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -213,7 +213,7 @@ namespace CrowdFunding.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     URI = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -234,7 +234,7 @@ namespace CrowdFunding.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 7, 22, 22, 31, 186, DateTimeKind.Utc).AddTicks(7012)),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -255,7 +255,7 @@ namespace CrowdFunding.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -278,7 +278,7 @@ namespace CrowdFunding.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     BackerId = table.Column<int>(type: "int", nullable: false),
                     FundingPackageId = table.Column<int>(type: "int", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 7, 22, 22, 31, 186, DateTimeKind.Utc).AddTicks(1211))
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 8, 16, 10, 50, 40, DateTimeKind.Utc).AddTicks(2899))
                 },
                 constraints: table =>
                 {
