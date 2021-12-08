@@ -9,8 +9,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>@ViewData["Title"] - CrowdFundingMVC</title>
+    
     <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css" />
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+   
     <link rel="stylesheet" href="~/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -18,7 +20,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark  ">
         <div class="container-fluid">
 
-            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img height="60" width="150" src="https://i.postimg.cc/05MrGWyb/logo.png"></a>
+            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img height="60" width="170" src="https://i.postimg.cc/43hWYQ7Q/logo-cor.png"></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -43,10 +45,10 @@
 
                 </ul>
 
-                <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2">
-                    <input class="form-control me-2" type="text" placeholder="Search" name="name">
+                <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2 ">
+                    <input class="form-control me-2" type="text" placeholder="Search"  name="name">  
                     <input type="hidden" name="page" value="1" />
-                    <button class="btn btn-proj" type="submit">Search</button>
+                    <button class="btn btn-proj  " type="submit"> Search</button>
                 </form>
             </div>
             <partial name="_LoginPartial" />
@@ -89,7 +91,7 @@
                 <div class="col-12 col-sm-3 ">
                     <form class="form-inline" asp-area="" asp-controller="Project" asp-action="Create" method="get">
                         <div class="bg-dark" style="width: 248px;">
-                            <button type="submit" id="tooltip" class="btn btn-proj1" data-toggle="tooltip" title="Almost There!">
+                            <button type="submit" id="tooltip" class="btn btn-proj1" data-bs-toggle="tooltip" title="Almost There!">
                                 Start a new Project right away!
                             </button>
                         </div>
