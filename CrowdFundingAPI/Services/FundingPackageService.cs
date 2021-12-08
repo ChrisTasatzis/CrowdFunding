@@ -20,8 +20,7 @@ namespace CrowdFundingAPI.Services
             {
                 Name = dto.Name,
                 Project = project,
-                Price = dto.Price,
-                Description = dto.Description
+                Price = dto.Price
             };
 
             _cfContext.FundingPackages.Add(fundingpackage);
@@ -31,8 +30,7 @@ namespace CrowdFundingAPI.Services
                 Id = fundingpackage.Id,
                 Name = fundingpackage.Name,
                 ProjectName = fundingpackage.Project.Name,
-                Price = fundingpackage.Price,
-                Description = fundingpackage.Description,
+                Price = fundingpackage.Price
             };
 
         }
@@ -59,8 +57,7 @@ namespace CrowdFundingAPI.Services
                 Id = fundingpackage.Id,
                 Name = fundingpackage.Name,
                 ProjectName = fundingpackage.Project.Name,
-                Price = fundingpackage.Price,
-                Description = fundingpackage.Description,
+                Price = fundingpackage.Price
             });
             }
             return result;
@@ -79,7 +76,6 @@ namespace CrowdFundingAPI.Services
                 Name = fundingpackage.Name,
                 ProjectName = fundingpackage.Project.Name,
                 Price = fundingpackage.Price,
-                Description = fundingpackage.Description,
             };
         }
 
@@ -97,7 +93,6 @@ namespace CrowdFundingAPI.Services
                     Name = fundingpackage.Name,
                     ProjectName = fundingpackage.Project.Name,
                     Price = fundingpackage.Price,
-                    Description = fundingpackage.Description,
                 }) ;
 
            }
@@ -108,9 +103,8 @@ namespace CrowdFundingAPI.Services
         {
             FundingPackage? fundingpackage = await _cfContext.FundingPackages.SingleOrDefaultAsync(p => p.Id == fundingpackageId);
                 if (fundingpackage is null) return null;
-                if (dto.Name != null) fundingpackage.Name= dto.Name;
-                if (dto.Description != null) fundingpackage.Description = dto.Description;
-                if (dto.Price != null) fundingpackage.Price = dto.Price;
+                if (dto.Name != null) fundingpackage.Name= dto.Name;                
+            if (dto.Price != null) fundingpackage.Price = dto.Price;
 
             await _cfContext.SaveChangesAsync();
             return new FundingPackageDto()
@@ -118,8 +112,7 @@ namespace CrowdFundingAPI.Services
                 Id = fundingpackage.Id,
                 Name = fundingpackage.Name,
                 ProjectName = fundingpackage.Project.Name,
-                Price = fundingpackage.Price,
-                Description = fundingpackage.Description,
+                Price = fundingpackage.Price
             };
         }
            

@@ -7,7 +7,7 @@
         public string Name { get; set; }
         public string? ProjectName { get; set; }
         public decimal Price { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
         public int? ProjectId { get; set; }
     }
 }

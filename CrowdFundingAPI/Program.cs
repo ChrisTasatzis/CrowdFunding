@@ -1,3 +1,6 @@
+
+using CrowdFundingAPI;
+using CrowdFundingAPI.Services;
 using CrowdFunding.Models;
 using Microsoft.EntityFrameworkCore;
 
