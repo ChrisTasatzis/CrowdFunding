@@ -14,35 +14,35 @@
 {
     if (Model.Project.ProjectCreator.Id == user.Id)
     {
-       
-        
-<!-- Toggle Button -->
-<button class="btn btn-danger mx-auto my-5 d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenus">
-    Click On me
-</button>
 
-<div class="offcanvas offcanvas-start navbar-dark bg-dark" id="offcanvasMenus" style="width: 200px;">
-    <!-- Sidebar Header -->
+
+        <!-- Toggle Button -->
+        <button class="btn btn-danger mx-auto my-5 d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenus">
+            Click On me
+        </button>
+
+        <div class="offcanvas offcanvas-start navbar-dark bg-dark" id="offcanvasMenus" style="width: 200px;">
+            <!-- Sidebar Header -->
     <div class="border-bottom p-4 mb-4 shadow-sm">
-        <a href="#"><img src="" alt="..." class="img-fluid w-50"></a>
-        <button type="button" class="btn-close float-end text-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+                <a href="#"><img src="" alt="..." class="img-fluid w-50"></a>
+                <button type="button" class="btn-close float-end text-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
 
-    <!-- Navbar Menus Links -->
+            <!-- Navbar Menus Links -->
     <nav class="nav justify-content-center">
-      <form class="form-inline ">
-        <a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Post</a>
-        <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Funding Package</a>
-        <a class="btn btn-primary mt-3">Edit</a>
-        <a class="btn btn-primary mt-3">Delete</a>
-      </form>
-  </nav>
-</div>
-     }
-}     
-        
-       
-  
+                <form class="form-inline ">
+                    <a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Post</a>
+                    <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="btn btn-primary mt-3">Add Funding Package</a>
+                    <a class="btn btn-primary mt-3">Edit</a>
+                    <a class="btn btn-primary mt-3">Delete</a>
+                </form>
+            </nav>
+        </div>
+    }
+}
+
+
+
 
 <div class="blog-single gray-bg">
     <div class="container">
@@ -53,7 +53,7 @@
                         <img src="@Model.Project.Thumbnail" title="" alt="">
                     </div>
                     <div class="article-title">
-                        <h6><a href="#">@Model.Project.Category</a></h6>
+                        <h6><a asp-controller="Project" asp-action="Category" asp-route-cat="@((int)Model.Project.Category)" asp-route-page="1">@Model.Project.Category</a></h6>
                         <h2>@Model.Project.Name</h2>
                         <div class="media">
 
@@ -67,7 +67,7 @@
                         <p>@Model.Project.Description</p>
                     </div>
 
-                     <div class="widget-body">
+                    <div class="widget-body">
                         <h3>Funding Packages</h3>
                         <div class="table-responsive-sm">
                             <table class="table table-bordered table-b">
@@ -88,12 +88,12 @@
                                             <td>@Model.Project.FundingPackages[i].Name</td>
                                             <td>@Model.Project.FundingPackages[i].Price€</td>
                                             <td>@Model.Project.FundingPackages[i].Description</td>
-                                             <td>
-                                            <form asp-controller="Project" asp-action="BackProject">
-                                               <input type="submit" value="v" />
-                                               <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id"/>
-                                               <input type="hidden"  asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id"/>
-                                            </form>
+                                            <td>
+                                                <form asp-controller="Project" asp-action="BackProject">
+                                                    <input type="submit" value="v" />
+                                                    <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id" />
+                                                    <input type="hidden" asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id" />
+                                                </form>
                                             </td>
                                         </tr>
                                     }

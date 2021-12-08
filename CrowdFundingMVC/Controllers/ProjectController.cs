@@ -195,8 +195,8 @@ namespace CrowdFundingMVC.Controllers
         public IActionResult Category(int cat, int page)
         {
 
-            var projects = _projectService.ReadProject((Category)cat, 9, page).Data;
-            var pages = _projectService.GetNumberOfPages((Category)cat, 9).Data;
+            var projects = _projectService.ReadProject((Category)cat, 1, page).Data;
+            var pages = _projectService.GetNumberOfPages((Category)cat, 1).Data;
 
             return View(new CategoryViewModel()
             {
