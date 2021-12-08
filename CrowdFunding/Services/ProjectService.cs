@@ -1,5 +1,6 @@
 ﻿using CrowdFunding.DTO;
 using CrowdFunding.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,8 @@ namespace CrowdFunding.Services
                     Description = "The Project is already active."
                 };
             if (dbProject.isActive != true)
-            { dbProject.isActive = true;
+            {
+                dbProject.isActive = true;
                 return new Response<bool>
                 {
                     Data = true,
@@ -188,18 +190,20 @@ namespace CrowdFunding.Services
                     StatusCode = 51
                 };
             }
-            if (project.Name == null)
-            {
+
+            if (_db.Projects.Where(p => p.Name == project.Name).Count() > 0)
                 return new Response<Project>()
                 {
                     Data = null,
-                    Description = "The inserted project name was null ",
+                    Description = $"Project Name {project.Name} is already taken.",
                     StatusCode = 52
                 };
-            }
 
             _db.Projects.Add(project);
-            project.ProjectCreator.Id = userId;
+
+            var creator = _db.Users.FirstOrDefault(u => u.Id == userId);
+
+            project.ProjectCreator = creator;
             if (_db.SaveChanges() == 1)
             {
                 return new Response<Project>()
@@ -292,46 +296,25 @@ namespace CrowdFunding.Services
             return new Response<Project>
             {
                 Data = project,
-                StatusCode = 12,
-                Description = "Project Found."
+                StatusCode = 0,
+                Description = "OK."
             };
         }
 
         public Response<List<Project>> ReadProject(int pageSize, int pageNumber)
         {
-
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0 || pageSize > 20) pageSize = 20;
-
-            List<Project> projects =
-            _db.Projects
+            var projects = _db.Projects
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            if (_db.Projects.Count() > 0)
-            {
-                foreach (var project in _db.Projects)
-                    return new Response<List<Project>>
-                    {
-                        Data = projects,
-                        StatusCode = 19,
-                        Description = "The projects were succesfully read"
-                    };
-            }
-            else
-                return new Response<List<Project>>
-                {
-                    Data = null,
-                    StatusCode = 33,
-                    Description = "The projects were not succesfully read"
-                };
-
             return new Response<List<Project>>
             {
-                Data = null,
-                StatusCode = 33,
-                Description = "The projects were not succesfully read"
+                Data = projects,
+                StatusCode = 0,
+                Description = "OK."
             };
         }
 
@@ -423,11 +406,10 @@ namespace CrowdFunding.Services
             return new Response<List<Project>>
             {
                 Data = null,
-                StatusCode = 33,
-                Description = "The projects were not succesfully read"
+                StatusCode = 12,
+                Description = "Project Found."
             };
         }
-    
 
         public Response<bool> RemoveFundingPackage(FundingPackage fundingPackage, int projectId)
         {
@@ -454,7 +436,7 @@ namespace CrowdFunding.Services
             }
         }
 
-        public Response<bool> RemovePhoto(Photo photo,int  projectId)
+        public Response<bool> RemovePhoto(Photo photo, int projectId)
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var media_ = photo;
@@ -583,6 +565,119 @@ namespace CrowdFunding.Services
                 Data = projectdb,
                 StatusCode = 18,
                 Description = "Project was successfully updated."
+            };
+        }
+
+        public Response<List<Project>> ReadFeaturedProjects(int numOfProejcts, int duration) // not working yet
+        {
+
+            var featured = _db.Set<ProjectBacker>()
+                .Where(pb => (DateTime.Now - pb.DateTime).TotalDays < duration)
+                .GroupBy(p => p.ProjectId)
+                .Select(cl => new
+                {
+                    projectId = cl.First().ProjectId,
+                    backing = cl.Sum(c => c.FundingPackage.Price)
+                })
+                .OrderBy(p => p.backing)
+                .Take(numOfProejcts)
+                .Select(p => _db.Projects.First(proj => proj.Id == p.projectId))
+                .ToList();
+
+            return new Response<List<Project>>
+            {
+                Data = featured,
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+
+        public Response<Project> ReadProjectComplete(int projectId)
+        {
+            var project = _db.Projects.Where(p => p.Id == projectId)
+                .Include(p => p.ProjectCreator)
+                .Include(p => p.Posts)
+                .Include(p => p.FundingPackages)
+                .Include(p => p.Photos)
+                .Include(p => p.Videos)
+                .FirstOrDefault();
+
+            if (project == null)
+                return new Response<Project>
+                {
+                    Data = null,
+                    StatusCode = 10,
+                    Description = "No project with this id exists."
+                };
+
+            return new Response<Project>
+            {
+                Data = project,
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+
+        public Response<List<BackerTotalProjectFunds>> ReadTopBakcers(int projectId, int numOfBackers)
+        {
+            var backerFunds = _db.Set<ProjectBacker>()
+                .Where(pb => pb.ProjectId == projectId)
+                .Include(pb => pb.FundingPackage)
+                .GroupBy(pb => pb.BackerId)
+                .Select(cl => new BackerIdTotalProjectFunds()
+                {
+                    BackerId = cl.First().BackerId,
+                    TotalFunds = cl.Sum(c => c.FundingPackage.Price)
+                })
+                .Take(numOfBackers)
+                .ToList();
+
+            var backers = new List<BackerTotalProjectFunds>();
+
+            foreach (var backerFund in backerFunds)
+            {
+                var user = _db.Users.Find(backerFund.BackerId);
+                backers.Add(new BackerTotalProjectFunds()
+                {
+                    Backer = user,
+                    TotalFunds = backerFund.TotalFunds
+                });
+            }
+
+            return new Response<List<BackerTotalProjectFunds>>
+            {
+                Data = backers,
+                StatusCode = 0,
+                Description = "OK."
+            };
+        }
+
+        public Response<bool> BackProject(int projectId, int userId, int fundingPackageId)
+        {
+            var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+            var user = _db.Users.FirstOrDefault(u => u.Id == userId);
+            var fundingPackage = _db.FundingPackages.FirstOrDefault(f => f.Id == fundingPackageId);
+
+            _db.Set<ProjectBacker>().Add(new ProjectBacker
+            {
+                ProjectId = projectId,
+                BackerId = userId,
+                FundingPackage = fundingPackage
+            });
+
+            if (_db.SaveChanges() != 1)
+                return new Response<bool>
+                {
+                    Data = false,
+                    StatusCode = 53,
+                    Description = "Could not save changes."
+                };
+
+            return new Response<bool>
+            {
+                Data = true,
+                StatusCode = 0,
+                Description = "User successfully backed the project."
             };
         }
     }

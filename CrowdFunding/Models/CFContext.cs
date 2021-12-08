@@ -14,6 +14,9 @@ namespace CrowdFunding.Models
         public override DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Video> Videos { get; set; }
+
         public DbSet<FundingPackage> FundingPackages { get; set;}
 
         public CFContext(DbContextOptions options) : base(options) { }
@@ -61,9 +64,21 @@ namespace CrowdFunding.Models
              .HasMany(p => p.Videos)
              .WithOne(p => p.Project);
 
+            builder.Entity<Project>()
+            .Property(ap => ap.DateTime)
+                .HasDefaultValue(DateTime.UtcNow);
+
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            builder.Entity<Project>()
+               .HasIndex(u => u.Name)
+               .IsUnique();
+
+            builder.Entity<Post>()
+                .Property(p => p.DateTime)
+                 .HasDefaultValue(DateTime.UtcNow);
 
             base.OnModelCreating(builder);
         }

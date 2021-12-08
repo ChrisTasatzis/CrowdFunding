@@ -1,0 +1,100 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ ViewData["Title"] = "Modal";
+}
+<!-- The Modal -->
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark">
+
+        <!-- Modal Header -->
+        <div class="modal-header  border-0">
+          <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="pill" href="#login">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="pill" href="#signup">Sign up</a>
+            </li>
+
+          </ul>
+          <a class="brand" href=""><img height="60" width="150" src="https://i.postimg.cc/05MrGWyb/logo.png"></a>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="tab-content">
+            <div id="login" class="container tab-pane active"><br>
+              <h3 style="color:silver;">Log in</h3>
+              <form action="/action_page.php">
+                <div class="form-floating mb-3 mt-3">
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                  <label for="email">Email</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                  <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                  <label for="pwd">Password</label>
+                </div>
+                <div class="form-check mb-3">
+                  <label style="color:silver;" class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="remember"> Remember me
+                  </label>
+                </div>
+
+              </form>
+              <!-- Modal footer -->
+              <div class="modal-footer border-0">
+
+                <button type="submit" class="btn btn-primary">Log in</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+              <div class="center">
+                <p style="color:silver;">New to KIKCIO? Sign up
+                <p>
+              </div>
+            </div>
+            <div id="signup" class="container tab-pane fade"><br>
+              <h3 style="color:silver;">Sign up</h3>
+              <form action="/action_page.php">
+                <div class="form-floating mb-3 mt-3">
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                  <label for="email">Email</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                  <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                  <label for="pwd">Password</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                  <input type="password" class="form-control" id="cpwd" placeholder="Confirm password" name="pswd">
+                  <label for="cpwd">Confirm Password</label>
+                </div>
+
+              </form>
+              <!-- Modal footer -->
+              <div class="modal-footer border-0">
+
+                <button type="submit" class="btn btn-primary">Sign up</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+              <div class="center">
+
+                <p style="color:silver;">Already a Member? <a class="nav-link" href="#login">Log in</a> </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- Modal footer -->
+
+      </div>
+    </div>
+  </div>

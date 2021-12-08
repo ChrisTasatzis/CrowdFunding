@@ -1,0 +1,55 @@
+﻿@using CrowdFunding.Models
+@using CrowdFundingMVC.Models.ProjectView
+@model CreateViewModel
+@{
+    var Categories = Category.GetValues(typeof(Category));
+}
+<div class="container-fluid mt-3 ">
+    <h2 style="color:silver;">Create Project</h2>
+    <form id="account" method="post" enctype="multipart/form-data">
+        <div class="col-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-floating mb-3 mt-3">
+                
+                <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Enter Name" name="Name">
+                <label asp-for="Name"  >Name:</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3 mt-3">
+               
+                <input asp-for="Description"    type="text"   class="form-control"  id="Des" placeholder="Enter Description" name="Description">
+                 
+                 <label asp-for="Description">Description:</label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                
+                <input asp-for="Goal" type="number" class="form-control" id="Goal" placeholder="Enter Goal" name="Goal" value="0" min="1">
+                <label asp-for="Goal">Goal:</label>
+                <span asp-validation-for="Goal" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+
+               
+                <select asp-for="Category" class="form-control" id="Category" name="Category">
+                     <label asp-for="Category" class="form-label">Choose your browser from the list:</label>
+                    @foreach (var cat in Categories)
+                    {
+                         <option value="@((int)cat)">@cat</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label asp-for="Thumbnail"  style="color:silver; class="form-label">Thumbnail</label>
+                <input asp-for="Thumbnail" type="file"  style="color:silver; class="form-control-file" id="Thumbnail" name="Thumbnail">
+            </div>
+            <div class="mb-3 mt-3">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+
+    </form>
+
+</div>

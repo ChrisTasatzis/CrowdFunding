@@ -1,0 +1,12 @@
+﻿@using CrowdFundingMVC.Models.ProjectController
+@model AddPostViewModel
+
+<form asp-action="addpost">
+  <div class="form-group">
+        <label asp-for="@Model.Text">Write your post here</label>
+        <textarea  asp-for="@Model.Text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <input type="hidden" asp-for="@Model.ProjectId" />
+  </div>
+
+   <button type="submit" class="btn btn-primary">Submit</button>
+</form>
