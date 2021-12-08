@@ -321,45 +321,25 @@ namespace CrowdFunding.Services
         public Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber)
         {
             if (pageNumber <= 0) pageNumber = 1;
-            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
 
-            List<Project> projects =
-            _db.Projects
+            List<Project> projects = _db.Projects
                 .Where(project => project.Category == category)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            if (_db.Projects.Count() > 0)
-            {
-                foreach (var project in _db.Projects)
-                    return new Response<List<Project>>
-                    {
-                        Data = projects,
-                        StatusCode = 19,
-                        Description = "The projects were succesfully read"
-                    };
-            }
-            else
-                return new Response<List<Project>>
-                {
-                    Data = null,
-                    StatusCode = 33,
-                    Description = "The projects were not succesfully read"
-                };
-
             return new Response<List<Project>>
             {
-                Data = null,
-                StatusCode = 33,
-                Description = "The projects were not succesfully read"
+                Data = projects,
+                StatusCode = 0,
+                Description = "The projects were succesfully read"
             };
 
         }
-       
+
         public Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber)
         {
-            
+
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0 || pageSize > 20) pageSize = 20;
 
@@ -651,7 +631,9 @@ namespace CrowdFunding.Services
                 FundingPackage = fundingPackage
             });
 
-            if (_db.SaveChanges() != 1)
+            project.Progress += fundingPackage.Price;
+
+            if (_db.SaveChanges() != 2)
                 return new Response<bool>
                 {
                     Data = false,
@@ -664,6 +646,20 @@ namespace CrowdFunding.Services
                 Data = true,
                 StatusCode = 0,
                 Description = "User successfully backed the project."
+            };
+        }
+
+        public Response<int> GetNumberOfPages(Category category, int pageSize)
+        {
+            var numOfProjects = _db.Projects
+                .Where(project => project.Category == category)
+                .Count();
+
+            return new Response<int>
+            {
+                Data = (int)Math.Ceiling((decimal)numOfProjects / pageSize),
+                StatusCode = 0,
+                Description = "OK."
             };
         }
     }

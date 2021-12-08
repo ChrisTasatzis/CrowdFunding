@@ -191,12 +191,22 @@ namespace CrowdFundingMVC.Controllers
         }
 
 
-        public IActionResult Category(int cat)
+        [HttpGet("Category/{cat:int}/{page:int}")]
+        public IActionResult Category(int cat, int page)
         {
-            var response = _projectService.ReadProject((Category)cat, 10, 1);
 
-            return View(response.Data);
+            var projects = _projectService.ReadProject((Category)cat, 9, page).Data;
+            var pages = _projectService.GetNumberOfPages((Category)cat, 9).Data;
+
+            return View(new CategoryViewModel()
+            {
+                Projects = projects,
+                Category = cat,
+                Pages = pages
+            });
         }
+
+
 
 
         private string getUniqueFileName(string fileName)
