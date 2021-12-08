@@ -35,7 +35,7 @@ namespace CrowdFunding.Services
                     Description = "The Project is already active."
                 };
             if (dbProject.isActive != true)
-            {   dbProject.isActive = true; 
+            { dbProject.isActive = true;
                 return new Response<bool>
                 {
                     Data = true,
@@ -81,7 +81,7 @@ namespace CrowdFunding.Services
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
             var media_ = photo;
-            if (media_==null || project == null)
+            if (media_ == null || project == null)
             {
                 return new Response<bool>
                 {
@@ -101,7 +101,7 @@ namespace CrowdFunding.Services
                 };
             }
         }
-        
+
         public Response<bool> AddVideo(Video video, int projectId)
         {
             var project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
@@ -179,16 +179,16 @@ namespace CrowdFunding.Services
 
         public Response<Project> CreateProject(Project project, int userId)
         {
-           if (project == null)
+            if (project == null)
             {
                 return new Response<Project>()
                 {
                     Data = null,
-                    Description =" The project was null ",
+                    Description = " The project was null ",
                     StatusCode = 51
                 };
             }
-           if (project.Name == null)
+            if (project.Name == null)
             {
                 return new Response<Project>()
                 {
@@ -202,19 +202,19 @@ namespace CrowdFunding.Services
             project.ProjectCreator.Id = userId;
             if (_db.SaveChanges() == 1)
             {
-                return new Response<Project>() 
+                return new Response<Project>()
                 {
-                    Data = project, 
-                    Description = "Project succesfully created", 
-                    StatusCode = 0 
+                    Data = project,
+                    Description = "Project succesfully created",
+                    StatusCode = 0
                 };
             }
 
-            return new Response<Project>() 
-            { 
-                Data = null, 
-                Description = "Project creation was unsuccesfull", 
-                StatusCode = 50 
+            return new Response<Project>()
+            {
+                Data = null,
+                Description = "Project creation was unsuccesfull",
+                StatusCode = 50
             };
         }
 
@@ -299,16 +299,16 @@ namespace CrowdFunding.Services
 
         public Response<List<Project>> ReadProject(int pageSize, int pageNumber)
         {
-            
-        if (pageNumber <= 0) pageNumber = 1;
-        if (pageSize <= 0 || pageSize > 20) pageSize = 20;
-            
-        List<Project> projects =
-        _db.Projects
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToList();
-            
+
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+
+            List<Project> projects =
+            _db.Projects
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
             if (_db.Projects.Count() > 0)
             {
                 foreach (var project in _db.Projects)
@@ -320,8 +320,8 @@ namespace CrowdFunding.Services
                     };
             }
             else
-                return new Response<List<Project>> 
-                { 
+                return new Response<List<Project>>
+                {
                     Data = null,
                     StatusCode = 33,
                     Description = "The projects were not succesfully read"
@@ -376,23 +376,58 @@ namespace CrowdFunding.Services
 
         public Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber)
         {
-            var project = _db.Projects.FirstOrDefault(p => p.Name == name);
+            //    var project = _db.Projects.FirstOrDefault(p => p.Name == name);
 
-            if (project == null)
+            //    if (project == null)
+            //        return new Response<List<Project>>
+            //        {
+            //            Data = null,
+            //            StatusCode = 10,
+            //            Description = "No project with this id exists."
+            //        };
+
+            //    return new Response<List<Project>>
+            //    {
+            //        Data = projects,
+            //        StatusCode = 12,
+            //        Description = "Project Found."
+            //    };
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+
+            List<Project> projects =
+            _db.Projects
+                .Where(project => project.Category == category)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            if (_db.Projects.Count() > 0)
+            {
+                foreach (var project in _db.Projects)
+                    return new Response<List<Project>>
+                    {
+                        Data = projects,
+                        StatusCode = 19,
+                        Description = "The projects were succesfully read"
+                    };
+            }
+            else
                 return new Response<List<Project>>
                 {
                     Data = null,
-                    StatusCode = 10,
-                    Description = "No project with this id exists."
+                    StatusCode = 33,
+                    Description = "The projects were not succesfully read"
                 };
 
             return new Response<List<Project>>
             {
-                Data = projects,
-                StatusCode = 12,
-                Description = "Project Found."
+                Data = null,
+                StatusCode = 33,
+                Description = "The projects were not succesfully read"
             };
         }
+    
 
         public Response<bool> RemoveFundingPackage(FundingPackage fundingPackage, int projectId)
         {
