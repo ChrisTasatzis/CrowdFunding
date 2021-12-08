@@ -40,12 +40,13 @@
 
                         </div>
                     </li>
-                    
+
                 </ul>
 
-                <form class="d-flex col-2">
-                    <input class="form-control me-2" type="text" placeholder="Search">
-                    <button class="btn btn-proj" type="button">Search</button>
+                <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2">
+                    <input class="form-control me-2" type="text" placeholder="Search" name="name">
+                    <input type="hidden" name="page" value="1" />
+                    <button class="btn btn-proj" type="submit">Search</button>
                 </form>
             </div>
             <partial name="_LoginPartial" />
@@ -88,9 +89,9 @@
                 <div class="col-12 col-sm-3 ">
                     <form class="form-inline" asp-area="" asp-controller="Project" asp-action="Create" method="get">
                         <div class="bg-dark" style="width: 248px;">
-                        <button type="submit" id = "tooltip" class="btn btn-proj1" data-toggle="tooltip" title="Almost There!">
-                            Start a new Project right away!
-                        </button>
+                            <button type="submit" id="tooltip" class="btn btn-proj1" data-toggle="tooltip" title="Almost There!">
+                                Start a new Project right away!
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -157,8 +158,8 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    
+
     </script>
-   
+
 </body>
 </html>

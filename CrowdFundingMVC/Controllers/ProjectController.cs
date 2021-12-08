@@ -206,6 +206,20 @@ namespace CrowdFundingMVC.Controllers
             });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Search(string name, int page)
+        {
+            var projects = _projectService.ReadProject(name, 6, page).Data;
+            var pages = _projectService.GetNumberOfPages(name, 6).Data;
+
+            return View(new SearchViewModel()
+            {
+                Projects = projects,
+                SearchTerm = name,
+                Pages = pages
+            });
+        }
+
 
 
 
