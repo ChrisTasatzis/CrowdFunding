@@ -320,19 +320,87 @@ namespace CrowdFunding.Services
 
         public Response<List<Project>> ReadProject(Category category, int pageSize, int pageNumber)
         {
-            throw new NotImplementedException();
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+
+            List<Project> projects =
+            _db.Projects
+                .Where(project => project.Category == category)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            if (_db.Projects.Count() > 0)
+            {
+                foreach (var project in _db.Projects)
+                    return new Response<List<Project>>
+                    {
+                        Data = projects,
+                        StatusCode = 19,
+                        Description = "The projects were succesfully read"
+                    };
+            }
+            else
+                return new Response<List<Project>>
+                {
+                    Data = null,
+                    StatusCode = 33,
+                    Description = "The projects were not succesfully read"
+                };
+
+            return new Response<List<Project>>
+            {
+                Data = null,
+                StatusCode = 33,
+                Description = "The projects were not succesfully read"
+            };
+
         }
 
         public Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber)
         {
-            var project = _db.Projects.FirstOrDefault(p => p.Name == name);
+            //    var project = _db.Projects.FirstOrDefault(p => p.Name == name);
 
-            if (project == null)
+            //    if (project == null)
+            //        return new Response<List<Project>>
+            //        {
+            //            Data = null,
+            //            StatusCode = 10,
+            //            Description = "No project with this id exists."
+            //        };
+
+            //    return new Response<List<Project>>
+            //    {
+            //        Data = projects,
+            //        StatusCode = 12,
+            //        Description = "Project Found."
+            //    };
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0 || pageSize > 20) pageSize = 20;
+
+            List<Project> projects =
+            _db.Projects
+                .Where(project => project.Category == category)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            if (_db.Projects.Count() > 0)
+            {
+                foreach (var project in _db.Projects)
+                    return new Response<List<Project>>
+                    {
+                        Data = projects,
+                        StatusCode = 19,
+                        Description = "The projects were succesfully read"
+                    };
+            }
+            else
                 return new Response<List<Project>>
                 {
                     Data = null,
-                    StatusCode = 10,
-                    Description = "No project with this id exists."
+                    StatusCode = 33,
+                    Description = "The projects were not succesfully read"
                 };
 
             return new Response<List<Project>>
