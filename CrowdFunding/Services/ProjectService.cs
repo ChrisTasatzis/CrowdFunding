@@ -356,30 +356,16 @@ namespace CrowdFunding.Services
             };
 
         }
-
+       
         public Response<List<Project>> ReadProject(string name, int pageSize, int pageNumber)
         {
-            //    var project = _db.Projects.FirstOrDefault(p => p.Name == name);
-
-            //    if (project == null)
-            //        return new Response<List<Project>>
-            //        {
-            //            Data = null,
-            //            StatusCode = 10,
-            //            Description = "No project with this id exists."
-            //        };
-
-            //    return new Response<List<Project>>
-            //    {
-            //        Data = projects,
-            //        StatusCode = 12,
-            //        Description = "Project Found."
-            //    };
+            
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0 || pageSize > 20) pageSize = 20;
 
             List<Project> projects =
             _db.Projects
+                .Where(project => project.Name.Contains(name))
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -405,8 +391,8 @@ namespace CrowdFunding.Services
             return new Response<List<Project>>
             {
                 Data = null,
-                StatusCode = 12,
-                Description = "Project Found."
+                StatusCode = 33,
+                Description = "The projects were not succesfully read"
             };
         }
 
