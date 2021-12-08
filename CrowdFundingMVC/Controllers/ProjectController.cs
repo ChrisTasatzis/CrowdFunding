@@ -191,6 +191,14 @@ namespace CrowdFundingMVC.Controllers
         }
 
 
+        public IActionResult Category(int cat)
+        {
+            var response = _projectService.ReadProject((Category)cat, 10, 1);
+
+            return View(response.Data);
+        }
+
+
         private string getUniqueFileName(string fileName)
         {
             fileName = Path.GetFileName(fileName);

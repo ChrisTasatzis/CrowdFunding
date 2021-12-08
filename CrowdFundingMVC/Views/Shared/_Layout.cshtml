@@ -71,7 +71,7 @@
                     @foreach (var category in Categories)
                     {
                         <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="#">@category</a>
+                            <a class="nav-link nav-link-icon" asp-controller="Project" asp-action="Category" asp-route-cat="@((int)category)">@category</a>
                         </li>
                     }
                 </ul>

@@ -380,7 +380,6 @@ namespace CrowdFunding.Services
 
             List<Project> projects =
             _db.Projects
-                .Where(project => project.Category == category)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
