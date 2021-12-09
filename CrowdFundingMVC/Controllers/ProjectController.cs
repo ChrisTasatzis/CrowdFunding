@@ -58,11 +58,7 @@ namespace CrowdFundingMVC.Controllers
         [Authorize]
         public async Task<IActionResult> AddPost(int id)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
-
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
+            if (await authorizeCreator(id) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
             return View(new AddPostViewModel()
             {
@@ -74,28 +70,29 @@ namespace CrowdFundingMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPost(AddPostViewModel model)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+            if (await authorizeCreator(model.ProjectId) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
-
-            _postService.CreatePost(new Post()
+            if (ModelState.IsValid)
             {
-                Text = model.Text
-            }, model.ProjectId);
+                var res = _postService.CreatePost(new Post()
+                {
+                    Text = model.Text
+                }, model.ProjectId);
 
-            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+                if (res.StatusCode == 0)
+                    return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+
+                ModelState.AddModelError(string.Empty, res.Description);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         [Authorize]
         public async Task<IActionResult> AddFundingPackage(int id)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
-
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
+            if (await authorizeCreator(id) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
             return View(new AddFPViewModel()
             {
@@ -107,38 +104,48 @@ namespace CrowdFundingMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFundingPackage(AddFPViewModel model)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+            if (await authorizeCreator(model.ProjectId) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
-
-            _fundingPackageService.CreateFundingPackage(new FundingPackage()
+            if (ModelState.IsValid && model.Name != null && model.Reward != null)
             {
-                Name = model.Name,
-                Price = model.Price,
-                Description = model.Reward
-            }, model.ProjectId);
+                var res = _fundingPackageService.CreateFundingPackage(new FundingPackage()
+                {
+                    Name = model.Name,
+                    Price = model.Price,
+                    Description = model.Reward
+                }, model.ProjectId);
 
-            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+                if (res.StatusCode == 0)
+                    return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+
+                ModelState.AddModelError(string.Empty, res.Description);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
-
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> BackProject(DetailsViewModel model)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var projectId = model.ProjectId;
-            var fundingPackageId = model.FundingPackageId;
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var projectId = model.ProjectId;
+                var fundingPackageId = model.FundingPackageId;
 
-            _projectService.BackProject(projectId, user.Id, fundingPackageId);
+                var res = _projectService.BackProject(projectId, user.Id, fundingPackageId);
 
+                if (res.StatusCode == 0)
+                    return RedirectToAction("Details", "Project", new { id = model.ProjectId });
 
+                ModelState.AddModelError(string.Empty, res.Description);
+            }
 
-            return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
-
 
         [Authorize]
         public IActionResult Create()
@@ -150,19 +157,14 @@ namespace CrowdFundingMVC.Controllers
         [Authorize]
         public async Task<ActionResult> Create(CreateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Name != null && model.Description != null && model.Category != null && model.Thumbnail != null)
             {
-                Console.WriteLine(model);
-                var img = model.Thumbnail;
-                string filePath = null;
-                string thumbnail = null;
-                if (img != null)
-                {
-                    var uniqueFileName = getUniqueFileName(img.FileName);
-                    var uploads = Path.Combine(_hostEnvironment.ContentRootPath + "wwwroot", "images");
-                    thumbnail = "/images/" + uniqueFileName;
-                    filePath = Path.Combine(uploads, uniqueFileName);
-                }
+
+                // Create file paths for saving
+                var uniqueFileName = getUniqueFileName(model.Thumbnail.FileName);
+                var uploads = Path.Combine(_hostEnvironment.ContentRootPath + "wwwroot", "images");
+                var thumbnail = "/images/" + uniqueFileName;
+                var filePath = Path.Combine(uploads, uniqueFileName);
 
                 var project = new Project()
                 {
@@ -180,14 +182,20 @@ namespace CrowdFundingMVC.Controllers
 
                 if (result.StatusCode == 0)
                 {
-                    if (filePath != null) img.CopyTo(new FileStream(filePath, FileMode.Create));
-                    _logger.LogInformation("Project Created");
-                    return RedirectToAction("Index", "Home");
+                    if (filePath != null)
+                    {
+                        model.Thumbnail.CopyTo(new FileStream(filePath, FileMode.Create));
+                        _logger.LogInformation("Project Created");
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Unable to save image.");
+                    }
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, result.Description);
-                    return View(model);
                 }
             }
 
@@ -195,7 +203,6 @@ namespace CrowdFundingMVC.Controllers
             return View(model);
 
         }
-
 
         [HttpGet("Category/{cat:int}/{page:int}")]
         public IActionResult Category(int cat, int page)
@@ -229,7 +236,7 @@ namespace CrowdFundingMVC.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Search(string name, int page)
+        public ActionResult Search(string name, int page)
         {
             var projects = _projectService.ReadProject(name, 6, page).Data;
             var pages = _projectService.GetNumberOfPages(name, 6).Data;
@@ -246,11 +253,7 @@ namespace CrowdFundingMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> AddPhoto(int id)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
-
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
+            if (await authorizeCreator(id) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
             return View(new AddPhotoViewModel()
             {
@@ -262,53 +265,51 @@ namespace CrowdFundingMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPhoto(AddPhotoViewModel model)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+            if (await authorizeCreator(model.ProjectId) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
-
-            string filePath = null;
-            string photoUri = null;
-
-            if (model.Photo != null)
+            if (ModelState.IsValid && model.Photo != null)
             {
                 var uniqueFileName = getUniqueFileName(model.Photo.FileName);
                 var uploads = Path.Combine(_hostEnvironment.ContentRootPath + "wwwroot", "images");
-                photoUri = "/images/" + uniqueFileName;
-                filePath = Path.Combine(uploads, uniqueFileName);
+                var photoUri = "/images/" + uniqueFileName;
+                var filePath = Path.Combine(uploads, uniqueFileName);
+
+
+                var photo = new Photo()
+                {
+                    URI = photoUri,
+                };
+
+                var result = _photoService.CreatePhoto(photo, model.ProjectId);
+
+                if (result.StatusCode == 0)
+                {
+                    if (filePath != null)
+                    {
+                        model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                        _logger.LogInformation("Photo Saved");
+                        return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Unable to save image.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Description);
+                }
             }
 
-            var photo = new Photo()
-            {
-                URI = photoUri,
-            };
-
-            var result = _photoService.CreatePhoto(photo, model.ProjectId);
-
-            if (result.StatusCode == 0)
-            {
-                if (filePath != null) model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
-                _logger.LogInformation("Photo Saved");
-                return RedirectToAction("Details", "Project", new { id = model.ProjectId });
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, result.Description);
-                return View(model);
-            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
-
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> AddVideo(int id)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
-
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
+            if (await authorizeCreator(id) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
             return View(new AddVideoViewModel()
             {
@@ -320,41 +321,38 @@ namespace CrowdFundingMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddVideo(AddVideoViewModel model)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(model.ProjectId).Data.ProjectCreator;
+            if (await authorizeCreator(model.ProjectId) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
-
-           var url = "https://www.youtube.com/embed/" + model.URL.Substring(model.URL.Length - 11);
-
-            var video = new Video()
+            if (ModelState.IsValid && model.URL != null)
             {
-                URL = url,
-            };
+                var url = "https://www.youtube.com/embed/" + model.URL.Substring(model.URL.Length - 11);
 
-            var result = _videoService.CreateVideo(video, model.ProjectId);
+                var video = new Video()
+                {
+                    URL = url,
+                };
 
-            if (result.StatusCode == 0)
-            {
-                _logger.LogInformation("Video Saved");
-                return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+                var result = _videoService.CreateVideo(video, model.ProjectId);
+
+                if (result.StatusCode == 0)
+                {
+                    _logger.LogInformation("Video Saved");
+                    return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Description);
+                }
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, result.Description);
-                return View(model);
-            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var creatorId = _projectService.ReadProjectComplete(id).Data.ProjectCreator;
-
-            if (creatorId != user)
-                return RedirectToAction("index", "home");
+            if (await authorizeCreator(id) == false) return StatusCode(StatusCodes.Status401Unauthorized);
 
             _projectService.DeleteProject(id);
 
@@ -370,5 +368,16 @@ namespace CrowdFundingMVC.Controllers
                       + Path.GetExtension(fileName);
         }
 
+        private async Task<bool> authorizeCreator(int projectId)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var project = _projectService.ReadProjectComplete(projectId);
+
+            if (project.Data == null || user == null) return false;
+
+            if (user != project.Data.ProjectCreator) return false;
+
+            return true;
+        }
     }
 }

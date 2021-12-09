@@ -10,6 +10,6 @@ namespace CrowdFunding.DTO
     {
         public T? Data { get; set; }
         public int StatusCode { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
     }
 }

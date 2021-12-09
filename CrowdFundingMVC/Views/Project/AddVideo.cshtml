@@ -2,6 +2,8 @@
 @model AddVideoViewModel
 
 <form asp-action="AddVideo" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
     <div class="form-group">
         <input asp-for="@Model.URL" type="text">
         <input type="hidden" asp-for="@Model.ProjectId" />

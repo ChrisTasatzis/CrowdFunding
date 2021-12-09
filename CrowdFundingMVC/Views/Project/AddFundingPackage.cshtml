@@ -2,13 +2,14 @@
 @model AddFPViewModel
 
 <form asp-action="addfundingpackage">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="@Model.Name">Name</label>
         <input type="text" asp-for="@Model.Name" />
     </div>
     <div class="form-group">
         <label asp-for="@Model.Price">Price</label>
-        <input type="number" asp-for="@Model.Price" min=0 />
+        <input type="number" asp-for="@Model.Price"/>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Reward">Name</label>

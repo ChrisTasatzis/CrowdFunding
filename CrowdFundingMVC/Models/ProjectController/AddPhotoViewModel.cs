@@ -5,7 +5,7 @@ namespace CrowdFundingMVC.Models.ProjectController
     public class AddPhotoViewModel
     {
         [Required]
-        public IFormFile Photo { get; set; }
+        public IFormFile? Photo { get; set; }
         [Required]
         public int ProjectId { get; set; }
     }
