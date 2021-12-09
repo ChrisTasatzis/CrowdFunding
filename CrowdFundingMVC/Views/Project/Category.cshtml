@@ -23,7 +23,14 @@
 
                     <h6 class="card-subtitle mb-2 text-muted">@project.Category</h6>
                     <p class="card-text">
-                       @project.Description
+                      @if (@project.Description.Length > 60)
+                        {
+                            @(project.Description.Substring(0, 56) + " ...")
+                         }
+                        else
+                        {
+                            @project.Description
+                        }
                     </p>
                     <div class="mt-3">
                         <div class="progress">

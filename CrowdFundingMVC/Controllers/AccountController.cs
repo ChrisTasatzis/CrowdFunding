@@ -25,10 +25,6 @@ namespace CrowdFundingMVC.Controllers
             _logger = logger;
             _userService = userService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         public IActionResult Register()
         {
