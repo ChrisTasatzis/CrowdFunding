@@ -11,61 +11,61 @@
 <div class="row">
     @foreach (var project in Model.Projects)
     {
-        <div class="col-md-4 mt-3">
-            <div class="card" style="width: 18rem;">
-                <img src="@project.Thumbnail" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">@project.Name  <div class="badge"> @if (project.Progress >= project.Goal)
+            <div class="col-md-4 mt-3">
+                <div class="card" style="width: 18rem;">
+                    <img src="@project.Thumbnail" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@project.Name  <div class="badge"> @if (project.Progress >= project.Goal)
                             {
-                                <span>Completed</span>
+                                        <span>Completed</span>
                             }
-                        </div></h5>
+                            </div></h5>
 
-                    <h6 class="card-subtitle mb-2 text-muted">@project.Category</h6>
-                    <p class="card-text">
-                      @if (@project.Description.Length > 60)
+                        <h6 class="card-subtitle mb-2 text-muted">@project.Category</h6>
+                        <p class="card-text">
+                        @if (@project.Description.Length > 60)
                         {
                             @(project.Description.Substring(0, 56) + " ...")
-                         }
+                        }
                         else
                         {
                             @project.Description
                         }
-                    </p>
-                    <div class="mt-3">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: @((int)(project.Progress / project.Goal * 100))%" aria-valuenow="50" aria-valuemin="0"
+                        </p>
+                        <div class="mt-3">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: @((int)(project.Progress / project.Goal * 100))%" aria-valuenow="50" aria-valuemin="0"
                              aria-valuemax="100">
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <span class="text1">@project.Progress Gathered <span class="text2">of @project.Goal</span></span>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <span class="text1">@project.Progress Gathered <span class="text2">of @project.Goal</span></span>
+                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="btn btn-proj mr-2"><i class="fas fa-link"></i> See More</a>
                         </div>
-                    </div>
-                    <div class="mt-3">
-                        <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="btn btn-proj mr-2"><i class="fas fa-link"></i> See More</a>
                     </div>
                 </div>
             </div>
-        </div>
     }
 
     @if (Model.Pages > 1)
     {
-        <div class="container mt-3">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            @for (int i = 0; i < Model.Pages; i++)
-            {
-                 
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Project" asp-action="Category" asp-route-cat="@((int)category)" asp-route-page="@(i+1)">@(i+1)</a>
-                  
-                </li>
+            <div class="container mt-3">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                @for (int i = 0; i < Model.Pages; i++)
+                {
 
-            }
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-        </div>
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Project" asp-action="Category" asp-route-cat="@((int)category)" asp-route-page="@(i+1)">@(i+1)</a>
+
+                        </li>
+
+                }
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+            </div>
     }
     </div>
