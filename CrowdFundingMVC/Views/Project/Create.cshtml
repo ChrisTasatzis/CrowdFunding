@@ -6,7 +6,7 @@
 }
 <div class="container-fluid mt-3 ">
     <h2 style="color:silver;">Create Project</h2>
-    <form id="account" method="post" enctype="multipart/form-data">
+    <form  method="post" id = 'cf' enctype="multipart/form-data">
         <div class="col-3">
             <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -43,9 +43,10 @@
                 <input asp-for="Thumbnail" type="file"  style="color:silver; class="form-control-file" id="Thumbnail" name="Thumbnail">
             </div>
             <div class="mb-3 mt-3">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" id = 'cs'   class="btn btn-primary">Create</button>
             </div>
 
     </form>
 
 </div>
+

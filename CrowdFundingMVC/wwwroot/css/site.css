@@ -518,3 +518,10 @@ img {
     height: 100%;
     border: none;
 }
+
+a {
+    text-decoration: none;
+    color: silver;
+}
+
+

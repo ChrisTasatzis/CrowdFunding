@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrowdFunding.Migrations
 {
-    public partial class chris5 : Migration
+    public partial class gf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -279,7 +279,7 @@ namespace CrowdFunding.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     BackerId = table.Column<int>(type: "int", nullable: false),
                     FundingPackageId = table.Column<int>(type: "int", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 8, 20, 28, 25, 659, DateTimeKind.Utc).AddTicks(1797))
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 12, 8, 23, 54, 7, 813, DateTimeKind.Utc).AddTicks(4832))
                 },
                 constraints: table =>
                 {
