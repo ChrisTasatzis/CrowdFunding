@@ -17,5 +17,8 @@ namespace CrowdFundingMVC.Models.ProjectView
         public decimal Goal { get; set; }
         [Required]
         public IFormFile? Thumbnail { set; get; }
+
+        [FileExtensions(Extensions = "jpg,jpeg", ErrorMessage = "The provided file must have JPEG format.")]
+        public string FileName => Thumbnail?.FileName;
     }
 }
