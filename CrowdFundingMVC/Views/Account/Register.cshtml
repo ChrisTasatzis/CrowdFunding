@@ -9,7 +9,7 @@
 <div id="signup" class="container tab-pane "><br>
               <h3 style="color:silver;">@ViewData["Title"]</h3>
               <section>
-        <form asp-route-returnUrl="index" method="post">
+        <form asp-route-returnUrl="index" method="post" id='formID'>
             <h4  style="color:silver;">Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -50,7 +50,7 @@
             </div>
             <!-- Modal footer -->
              <div class="modal-footer border-0">
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" id='submitID' class="btn btn-primary">Register</button>
              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
               </div>
               <div class="center">

@@ -1,22 +1,30 @@
 ﻿@using CrowdFundingMVC.Models.ProjectController
 @model AddFPViewModel
 
-<form asp-action="addfundingpackage">
+<form asp-action="addfundingpackage" id='formID'>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group style="color:silver;"">
+    <div class="form-floating mb-3 mt-3" style="color:silver;">
+        
+        <input type="text" asp-for="@Model.Name" class="form-control" placeholder="Name" name="Name"/>
         <label asp-for="@Model.Name">Name</label>
-        <input type="text" asp-for="@Model.Name" />
     </div>
-    <div class="form-group">
+
+
+    <div class="form-floating mb-3 mt-3" style="color:silver;">
+        
+        <input type="text" asp-for="@Model.Reward" class="form-control" placeholder="Reward"  name="Reward"/>
+        <label asp-for="@Model.Reward">Reward</label>
+    </div>
+
+
+    <div class="form-floating mb-3 mt-3" style="color:silver;" >
+        
+        <input type="number" asp-for="@Model.Price" class="form-control" placeholder="Price"  name="Price"/>
         <label asp-for="@Model.Price">Price</label>
-        <input type="number" asp-for="@Model.Price"/>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Reward">Name</label>
-        <input type="text" asp-for="@Model.Reward" />
-    </div>
+    
 
     <input type="hidden" asp-for="@Model.ProjectId" />
 
-    <button type="submit" class="btn btn-primary mb-3 mt-3">Submit</button>
+    <button type="submit" id='submitID' class="btn btn-primary mb-3 mt-3">Add</button>
 </form>

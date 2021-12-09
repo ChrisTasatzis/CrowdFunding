@@ -14,9 +14,8 @@
 })*/
 
 
-/* var form = document.getElementById(clicked_id);
-var submitButton = document.getElementById(clicked_id);
-
+var form = document.getElementById('formID');
+var submitButton = document.getElementById('submitID');
 
 form.addEventListener('submit', function () {
 
@@ -26,11 +25,29 @@ form.addEventListener('submit', function () {
     // Change the "Submit" text
     submitButton.value = 'Please wait...';
 
-}, false);*/
+}, false);
 
 
 
 
+/*for (var i = 0; i < document.getElementsByName('btnSubmit').length; i++) {
+    var form = document.getElementById('btnSubmit')[i];
+    var submitButton = document.getElementById('btnSubmit')[i];
+
+
+    form.addEventListener('submit', function () {
+
+        // Disable the submit button
+        submitButton.setAttribute('disabled', 'disabled');
+
+        // Change the "Submit" text
+        submitButton.value = 'Please wait...';
+
+    }, false);
+}*/
+
+
+/*
 var tryNumber = 0;
 jQuery('input[type=submit]').click(function (event) {
     var self = $(this);
@@ -47,4 +64,4 @@ jQuery('input[type=submit]').click(function (event) {
     };
 }); 
 
-
+*/
