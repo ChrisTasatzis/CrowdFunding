@@ -2,11 +2,12 @@
 @model AddPostViewModel
 
 <form  asp-action="addpost" id = 'pf'>
-  <div class="form-group">
-        <label asp-for="@Model.Text">Write your post here</label>
+  <div class="form-group" style="color:silver;">
+       <h3> <label asp-for="@Model.Text">Write your post here</label> </h3>
         <textarea  asp-for="@Model.Text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         <input type="hidden" asp-for="@Model.ProjectId" />
   </div>
-
+  <div class="mb-3 mt-3">
    <button type="submit" id = 'ps'  class="btn btn-primary">Submit</button>
+   </div>
 </form>
