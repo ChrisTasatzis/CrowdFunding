@@ -21,12 +21,11 @@ namespace CrowdFunding.Models
 
         public CFContext(DbContextOptions options) : base(options) { }
 
-        public CFContext() : base() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            //builder.UseSqlServer("Data Source = localhost; Initial Catalog = CrowdFunding; Integrated Security=true");
-            builder.UseSqlServer("Data Source = localhost; Initial Catalog = CrowdFunding; User ID = sa; Password = admin!@#123");
+            //builder.UseSqlServer("Data Source = localhost; Initial Catalog = CrowdFunding; User ID = sa; Password = admin!@#123");
+            builder.LogTo(Console.WriteLine);
         }
 
 

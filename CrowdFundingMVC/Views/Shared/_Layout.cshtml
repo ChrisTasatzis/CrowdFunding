@@ -1,4 +1,5 @@
 ﻿@using CrowdFunding.Models
+@inject SignInManager<User> signInManager
 
 @{
     var Categories = Category.GetValues(typeof(Category));
@@ -9,10 +10,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>@ViewData["Title"] - CrowdFundingMVC</title>
-    
+
     <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css" />
     <script src="/bootstrap/js/bootstrap.min.js"></script>
-   
+
     <link rel="stylesheet" href="~/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -46,7 +47,7 @@
                 </ul>
 
                 <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2 ">
-                    <input class="form-control me-2" type="text" placeholder="Search"  name="name">  
+                    <input class="form-control me-2" type="text" placeholder="Search" name="name">
                     <input type="hidden" name="page" value="1" />
                     <button class="btn btn-proj  " type="submit"> Search</button>
                 </form>
@@ -62,7 +63,7 @@
             <div class="row row-header  align-items-center">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                            <a class="nav-link nav-link-icon" asp-controller="Project" asp-action="CategoryAll" asp-route-page="1">All</a>
+                        <a class="nav-link nav-link-icon" asp-controller="Project" asp-action="CategoryAll" asp-route-page="1">All</a>
                     </li>
                     @foreach (var category in Categories)
                     {
@@ -120,12 +121,14 @@
                     <h5>Links</h5>
                     <ul class="list-unstyled">
                         <li><a style="color: silver" href='~/Home/Index'> <span class="fa fa-home "></span>Home</a></li>
-                       
                         <li><a style="color: silver" data-bs-toggle="collapse" data-bs-target="#colacat" href=''><span class="fa fa-tasks"></span> Categories</a></li>
-                        <li><a style="color: silver" href='~/Account/myaccount'><span class="fa fa-address-card "></span> My Account</a></li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li><a style="color: silver" href='~/Account/myaccount'><span class="fa fa-address-card "></span> My Account</a></li>
+                        }
                     </ul>
                 </div>
-                <div  class="col-6 col-sm-5">
+                <div class="col-6 col-sm-5">
                     <h5>Our Address</h5>
                     <address>
                         912, Clear Wave Road<br>
