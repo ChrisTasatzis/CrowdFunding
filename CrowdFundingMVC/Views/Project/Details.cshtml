@@ -11,19 +11,6 @@
     var mediaCount = Model.Project.Photos.Count + Model.Project.Videos.Count;
 }
 
-@if (signInManager.IsSignedIn(User))
-{
-    if (Model.Project.ProjectCreator.Id == user.Id)
-    {
-
-
-
-    }
-}
-
-
-
-
 
 <div class="blog-single gray-bg">
     <div class="container">
@@ -32,18 +19,18 @@
                 <article class="article">
                     @if (mediaCount > 0)
                     {
-                                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
-                                        <!-- Indicators/dots -->
+                        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                            <!-- Indicators/dots -->
                         <div class="carousel-indicators">
                                 @for (int i = 0; i < Model.Project.Photos.Count; i++)
                                 {
                                     @if (i == 0)
                                     {
-                                                                            <button type="button" data-bs-target="#demo" data-bs-slide-to="@i" class="active"></button>
+                                        <button type="button" data-bs-target="#demo" data-bs-slide-to="@i" class="active"></button>
                                     }
                                     else
                                     {
-                                                                            <button type="button" data-bs-target="#demo" data-bs-slide-to="@i"></button>
+                                        <button type="button" data-bs-target="#demo" data-bs-slide-to="@i"></button>
                                     }
                                 }
 
@@ -51,32 +38,32 @@
                                 {
                                     @if (i == 0 && Model.Project.Photos.Count == 0)
                                     {
-                                                                            <button type="button" data-bs-target="#demo" data-bs-slide-to="@(i + Model.Project.Photos.Count)" class="active"></button>
+                                        <button type="button" data-bs-target="#demo" data-bs-slide-to="@(i + Model.Project.Photos.Count)" class="active"></button>
                                     }
                                     else
                                     {
-                                                                            <button type="button" data-bs-target="#demo" data-bs-slide-to="@(i + Model.Project.Photos.Count)"></button>
+                                        <button type="button" data-bs-target="#demo" data-bs-slide-to="@(i + Model.Project.Photos.Count)"></button>
                                     }
                                 }
 
-                                        </div>
-                                        <div class="container">
-                                            <div class="row row-content">
-                                                <!-- The slideshow/carousel -->
+                            </div>
+                            <div class="container">
+                                <div class="row row-content">
+                                    <!-- The slideshow/carousel -->
                                 <div class=" carousel-inner">
                                         @for (int i = 0; i < Model.Project.Photos.Count; i++)
                                         {
                                             @if (i == 0)
                                             {
-                                                                                    <div class="carousel-item active">
-                                                                                        <img src="@Model.Project.Photos[i].URI" alt="Chicago" class="d-block" style="width:100%">
-                                                                                    </div>
+                                                <div class="carousel-item active">
+                                                    <img src="@Model.Project.Photos[i].URI" alt="Chicago" class="d-block" style="width:100%">
+                                                </div>
                                             }
                                             else
                                             {
-                                                                                    <div class="carousel-item">
-                                                                                        <img src="@Model.Project.Photos[i].URI" alt="Chicago" class="d-block" style="width:100%">
-                                                                                    </div>
+                                                <div class="carousel-item">
+                                                    <img src="@Model.Project.Photos[i].URI" alt="Chicago" class="d-block" style="width:100%">
+                                                </div>
                                             }
                                         }
 
@@ -84,97 +71,102 @@
                                         {
                                             @if (i == 0 && Model.Project.Photos.Count == 0)
                                             {
-                                                                                    <div class="carousel-item active">
-                                                                                        <div class="container1">
-                                                                                            <iframe class="responsive-iframe" src="@Model.Project.Videos[i].URL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                                                                        </div>
-                                                                                    </div>
+                                                <div class="carousel-item active">
+                                                    <div class="container1">
+                                                        <iframe class="responsive-iframe" src="@Model.Project.Videos[i].URL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
                                             }
                                             else
                                             {
-                                                                                    <div class="carousel-item">
-                                                                                        <div class="container1">
-                                                                                            <iframe class="responsive-iframe" src="@Model.Project.Videos[i].URL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                                                                        </div>
-                                                                                    </div>
+                                                <div class="carousel-item">
+                                                    <div class="container1">
+                                                        <iframe class="responsive-iframe" src="@Model.Project.Videos[i].URL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
                                             }
                                         }
-                                                </div>
-
-                                                <!-- Left and right controls/icons -->
-                                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon"></span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon"></span>
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
+
+                                    <!-- Left and right controls/icons -->
+                                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     }
                     <div class="article-title">
                         <h6><a asp-controller="Project" asp-action="Category" asp-route-cat="@((int)Model.Project.Category)" asp-route-page="1">@Model.Project.Category</a></h6>
-           <h2>@Model.Project.Name</h2>
+                        <h2>@Model.Project.Name</h2>
 
                         <div class="media">
 
                             <div class="media-body">
-                                @if (Model.Project.ProjectCreator.Id == user.Id)
+                                @if (signInManager.IsSignedIn(User))
+                                {
+                                    @if (Model.Project.ProjectCreator.Id == user.Id)
 
-                               {
-                    <div class="table-responsive-sm">
-                                        <table class="table table-striped  ">
-                                            <thead>
-                                                <tr>
-                                                    <th> <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
-                                            <span>On @Model.Project.DateTime.ToString()</span></th>
-                                          
-                                                    <th><a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="fas fa-plus-square fa-3x"  ></a></th>
-                                                    
-                                                    <th> <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="fas fa-hand-holding-usd fa-3x"></a></th>
-                                                    <th><a asp-controller="Project" asp-action="AddPhoto" asp-route-id="@Model.Project.Id" class="far fa-image fa-3x"></a></th>
-                                                    <th><a asp-controller="Project" asp-action="AddVideo" asp-route-id="@Model.Project.Id"  class="fab fa-youtube fa-3x"></a></th>
-                                                     <th> <a href=''  class="far fa-trash-alt fa-3x" data-bs-toggle="modal" data-bs-target="#myModaldel"> </a></th>
-                                                        </tr>
-                                            </thead>
+                                    {
+                                        <div class="table-responsive-sm">
+                                            <table class="table table-striped  ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
+                                                            <span>On @Model.Project.DateTime.ToString()</span>
+                                                        </th>
+
+                                                        <th><a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="fas fa-plus-square fa-3x"></a></th>
+
+                                                        <th> <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="fas fa-hand-holding-usd fa-3x"></a></th>
+                                                        <th><a asp-controller="Project" asp-action="AddPhoto" asp-route-id="@Model.Project.Id" class="far fa-image fa-3x"></a></th>
+                                                        <th><a asp-controller="Project" asp-action="AddVideo" asp-route-id="@Model.Project.Id" class="fab fa-youtube fa-3x"></a></th>
+                                                        <th> <a href='' class="far fa-trash-alt fa-3x" data-bs-toggle="modal" data-bs-target="#myModaldel"> </a></th>
+                                                    </tr>
+                                                </thead>
                                             </table>
-                                           </div>
-                                                     <!-- The Modal -->
-            <div class="modal fade " id="myModaldel">
-              <div class="modal-dialog">
-                <div class="modal-content">
+                                        </div>
+                                        <!-- The Modal -->
+                                        <div class="modal fade " id="myModaldel">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
 
-                  <!-- Modal Header -->
-      <div class="modal-header bg-dark">
-                    <h4 style="color=silver;" class="modal-title">Warning!!!</h4>
-                    <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                  </div>
+                                                    <!-- Modal Header -->
+                                            <div class="modal-header bg-dark">
+                                                        <h4 style="color=silver;" class="modal-title">Warning!!!</h4>
+                                                        <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                    </div>
 
-                  <!-- Modal body -->
-      <div class="modal-body bg-dark">
-                   <h4 style="color=silver;">Are you sure you want to delete this Project</h4>
-                  </div>
+                                                    <!-- Modal body -->
+                                            <div class="modal-body bg-dark">
+                                                        <h4 style="color=silver;">Are you sure you want to delete this Project</h4>
+                                                    </div>
 
-                  <!-- Modal footer -->
-      <div class="modal-footer bg-dark">
-                      <a asp-controller="Project" asp-action="Delete" asp-route-id="@Model.Project.Id" class="btn btn-primary " method="post" >Delete</a>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                  </div>
+                                                    <!-- Modal footer -->
+                                            <div class="modal-footer bg-dark">
+                                                        <a asp-controller="Project" asp-action="Delete" asp-route-id="@Model.Project.Id" class="btn btn-primary " method="post">Delete</a>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                    </div>
 
-                </div>
-              </div>
-            </div>
-
-
+                                                </div>
+                                            </div>
+                                        </div>
 
 
+
+
+                                    }
                                 }
-                           else
+                                else
                                 {
 
-   
-                                     <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
-                                            <span>On @Model.Project.DateTime.ToString()</span>
+
+                                    <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
+                                    <span>On @Model.Project.DateTime.ToString()</span>
 
 
                                 }
@@ -202,19 +194,19 @@
                                 <tbody>
                                     @for (int i = 0; i < @Model.Project.FundingPackages.Count; i++)
                                     {
-                                                    <tr>
-                                                        <td>@(i+1)</td>
-                                                        <td>@Model.Project.FundingPackages[i].Name</td>
-                                                        <td>@Model.Project.FundingPackages[i].Price€</td>
-                                                        <td>@Model.Project.FundingPackages[i].Description</td>
-                                                        <td>
-                                                            <form asp-controller="Project" asp-action="BackProject">
-                                                                <input type="submit" value="v" />
-                                                                <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id" />
-                                                                <input type="hidden" asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id" />
-                                                            </form>
-                                                        </td>
-                                                    </tr>
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@Model.Project.FundingPackages[i].Name</td>
+                                            <td>@Model.Project.FundingPackages[i].Price€</td>
+                                            <td>@Model.Project.FundingPackages[i].Description</td>
+                                            <td>
+                                                <form asp-controller="Project" asp-action="BackProject">
+                                                    <input type="submit" value="v" />
+                                                    <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id" />
+                                                    <input type="hidden" asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id" />
+                                                </form>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -281,15 +273,15 @@
                         @for (int i = 0; i < posts; i++)
                         {
 
-                                        <div class="latest-post-aside media">
-                                            <div class="lpa-left media-body">
-                                                <div class="lpa-title">
-                                                    <h5>@Model.Project.Posts[i].Text</h5>
-                                                </div>
-                                                <span>By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </span>
-                                                <span>On @Model.Project.Posts[i].DateTime</span>
-                                            </div>
-                                        </div>
+                            <div class="latest-post-aside media">
+                                <div class="lpa-left media-body">
+                                    <div class="lpa-title">
+                                        <h5>@Model.Project.Posts[i].Text</h5>
+                                    </div>
+                                    <span>By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </span>
+                                    <span>On @Model.Project.Posts[i].DateTime</span>
+                                </div>
+                            </div>
                         }
 
                     </div>
@@ -315,12 +307,12 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.BackerFunds.Count; i++)
                                     {
-                                                    <tr>
-                                                        <td>@(i+1)</td>
-                                                        <td>@Model.BackerFunds[i].Backer.FirstName</td>
-                                                        <td>@Model.BackerFunds[i].Backer.LastName</td>
-                                                        <td>@Model.BackerFunds[i].TotalFunds€</td>
-                                                    </tr>
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@Model.BackerFunds[i].Backer.FirstName</td>
+                                            <td>@Model.BackerFunds[i].Backer.LastName</td>
+                                            <td>@Model.BackerFunds[i].TotalFunds€</td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
