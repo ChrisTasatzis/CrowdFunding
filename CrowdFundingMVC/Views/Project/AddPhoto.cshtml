@@ -4,6 +4,7 @@
 <form asp-action="AddPhoto" id='formID' enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group" style="color:silver;">
+        <h3> <label asp-for="@Model.Photo">Add a photo to your project</label> </h3>
         <input asp-for="@Model.Photo"  type="file" id="Photo" name="Photo">
         <input type="hidden" asp-for="@Model.ProjectId" />
     </div>
