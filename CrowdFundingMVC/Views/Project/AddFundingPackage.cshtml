@@ -3,7 +3,7 @@
 
 <form asp-action="addfundingpackage">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
+    <div class="form-group style="color:silver;"">
         <label asp-for="@Model.Name">Name</label>
         <input type="text" asp-for="@Model.Name" />
     </div>
@@ -18,5 +18,5 @@
 
     <input type="hidden" asp-for="@Model.ProjectId" />
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary mb-3 mt-3">Submit</button>
 </form>
