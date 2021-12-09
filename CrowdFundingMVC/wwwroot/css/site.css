@@ -1,3 +1,8 @@
+
+.fixed-top{
+position:fixed !important;
+}
+
 .jumbotron {
     padding: 30px 30px 30px 30px;
     margin: 0px auto;
@@ -6,19 +11,40 @@
 }
 
 address {
-    font-size: 80%;
+    font-size: 90%;
     margin: 0px;
 }
 
+body {
+    background: #111 !important;
+
+}
+
+html, body {
+    height: 100%;
+}
+
+    body > footer {
+        position: sticky;
+        top: 100vh;
+    }
+
 .footer {
-    bottom: 0;
+    
     width: 100%;
     white-space: nowrap;
     margin: 0px auto;
     padding: 20px 0px 20px 0px;
     color: silver;
-    position: relative;
-  
+}
+
+
+
+
+
+
+#content-wrap {
+    padding-bottom: 2.5rem; /* Footer height */
 }
 
 .cancel {
@@ -65,9 +91,7 @@ address {
     --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
 }
 
-body {
-    background: #111 !important;
-}
+
 
 .card {
     background: #222;
