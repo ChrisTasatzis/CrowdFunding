@@ -7,20 +7,21 @@ namespace CrowdFundingAPI.Services
     public class FundingPackageService : IFundingPackage
     {
         private readonly CFContext _cfContext;
-        public FundingPackageService (CFContext context)
+        public FundingPackageService(CFContext context)
         {
-            _cfContext = context;        
+            _cfContext = context;
         }
         public async Task<FundingPackageDto> AddFundingPackage(FundingPackageDto dto)
         {
             Project? project = await _cfContext.Projects.SingleOrDefaultAsync(p => p.Id == dto.ProjectId);
-            if (project == null) return null; 
+            if (project == null) return null;
 
             FundingPackage fundingpackage = new FundingPackage()
             {
                 Name = dto.Name,
                 Project = project,
-                Price = dto.Price
+                Price = dto.Price,
+                Description = dto.Description,
             };
 
             _cfContext.FundingPackages.Add(fundingpackage);
@@ -30,7 +31,8 @@ namespace CrowdFundingAPI.Services
                 Id = fundingpackage.Id,
                 Name = fundingpackage.Name,
                 ProjectName = fundingpackage.Project.Name,
-                Price = fundingpackage.Price
+                Price = fundingpackage.Price,
+                Description = fundingpackage.Description
             };
 
         }
@@ -47,18 +49,20 @@ namespace CrowdFundingAPI.Services
 
         public async Task<List<FundingPackageDto>> GetAllPackages()
         {
-            var fundingPackages = await _cfContext.FundingPackages.ToListAsync();
+            var fundingPackages = await _cfContext.FundingPackages.Include(p => p.Project).ToListAsync();
 
             List<FundingPackageDto> result = new List<FundingPackageDto>();
             foreach (var fundingpackage in fundingPackages)
             {
-                result.Add(new FundingPackageDto ()
-              { 
-                Id = fundingpackage.Id,
-                Name = fundingpackage.Name,
-                ProjectName = fundingpackage.Project.Name,
-                Price = fundingpackage.Price
-            });
+                result.Add(new FundingPackageDto()
+                {
+                    Id = fundingpackage.Id,
+                    Name = fundingpackage.Name,
+                    ProjectName = fundingpackage.Project.Name,
+                    Price = fundingpackage.Price,
+                    Description = fundingpackage.Description
+                    
+                });
             }
             return result;
         }
@@ -79,10 +83,10 @@ namespace CrowdFundingAPI.Services
             };
         }
 
-        public async Task <List<FundingPackageDto>> Search(string name, string project)
+        public async Task<List<FundingPackageDto>> Search(string name, string project)
         {
-            IQueryable <FundingPackage> results = _cfContext.FundingPackages.Include(p => p.Project); 
-            if (name is not null) results = results. Where (p => p.Name == name);
+            IQueryable<FundingPackage> results = _cfContext.FundingPackages.Include(p => p.Project);
+            if (name is not null) results = results.Where(p => p.Name == name);
             List<FundingPackage> fundingPackages = results.ToList();
             List<FundingPackageDto?> fundingpackageDtos = new List<FundingPackageDto?>();
             foreach (var fundingpackage in fundingPackages)
@@ -93,18 +97,20 @@ namespace CrowdFundingAPI.Services
                     Name = fundingpackage.Name,
                     ProjectName = fundingpackage.Project.Name,
                     Price = fundingpackage.Price,
-                }) ;
+                    Description = fundingpackage.Description
+                });
 
-           }
+            }
             return fundingpackageDtos;
         }
 
         public async Task<FundingPackageDto> Update(int fundingpackageId, FundingPackageDto dto)
         {
-            FundingPackage? fundingpackage = await _cfContext.FundingPackages.SingleOrDefaultAsync(p => p.Id == fundingpackageId);
-                if (fundingpackage is null) return null;
-                if (dto.Name != null) fundingpackage.Name= dto.Name;                
+            FundingPackage? fundingpackage = await _cfContext.FundingPackages.Include(p => p.Project).SingleOrDefaultAsync(p => p.Id == fundingpackageId);
+            if (fundingpackage is null) return null;
+            if (dto.Name != null) fundingpackage.Name = dto.Name;
             if (dto.Price != null) fundingpackage.Price = dto.Price;
+            if (dto.Description != null) fundingpackage.Description = dto.Description;
 
             await _cfContext.SaveChangesAsync();
             return new FundingPackageDto()
@@ -112,10 +118,11 @@ namespace CrowdFundingAPI.Services
                 Id = fundingpackage.Id,
                 Name = fundingpackage.Name,
                 ProjectName = fundingpackage.Project.Name,
-                Price = fundingpackage.Price
+                Price = fundingpackage.Price,
+                Description = fundingpackage.Description
             };
         }
-           
-      }
+
     }
+}
 
