@@ -257,6 +257,7 @@ html, body {
     box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
     border-radius: 5px;
     overflow: hidden;
+    
     background: #222;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -273,6 +274,7 @@ html, body {
 .blog-aside  {
     color: floralwhite;
     padding: 15px;
+    
 }
 
 .blog-aside .widget-title {
@@ -319,10 +321,20 @@ html, body {
             margin-right: 10px;
         }
 
+.latest-post-aside {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+}
+
+
 .blog-aside .latest-post-aside + .latest-post-aside {
     border-top: 1px solid #eee;
     padding-top: 15px;
     margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    margin-left:5px;
 }
 
 .blog-aside .latest-post-aside .lpa-right {
@@ -549,3 +561,30 @@ a {
 }
 
 
+.name {
+    color: blue
+}
+
+.work {
+    font-weight: bold;
+    font-size: 15px
+}
+
+.about span {
+    font-size: 13px
+}
+
+.v-profile {
+    color: blue;
+    cursor: pointer
+}
+
+.box {
+    -webkit-box-shadow: 13px 12px 5px -10px rgba(196, 194, 196, 0.72);
+    -moz-box-shadow: 13px 12px 5px -10px rgba(196, 194, 196, 0.72);
+    box-shadow: 13px 12px 5px -10px rgba(196, 194, 196, 0.72)
+}
+
+.col-md-3 {
+    margin-top: 10px
+}

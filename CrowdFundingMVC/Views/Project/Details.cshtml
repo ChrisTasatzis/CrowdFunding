@@ -188,7 +188,7 @@
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Reward</th>
-                                        <th>Buy</th>
+                                        <th>Fund</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -201,7 +201,7 @@
                                             <td>@Model.Project.FundingPackages[i].Description</td>
                                             <td>
                                                 <form asp-controller="Project" asp-action="BackProject">
-                                                    <input type="submit" value="v" />
+                                                    <input type="submit" value="$"  />
                                                     <input type="hidden" asp-for="ProjectId" value="@Model.Project.Id" />
                                                     <input type="hidden" asp-for="FundingPackageId" value="@Model.Project.FundingPackages[i].Id" />
                                                 </form>
@@ -213,52 +213,8 @@
                         </div>
                     </div>
 
-                    <!-- <section class="gallery min-vh">
-                         <div class="container">
-                             <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-md-3">
-                                 <div class="col">
-                                     <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
-                                          alt="gallery">
-                                 </div>
-                                 <div class="col">
-                                     <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
-                                          alt="gallery">
-                                 </div>
-                                 <div class="col">
-                                     <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
-                                          alt="gallery">
-                                 </div>
-                                 <div class="col">
-                                     <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
-                                          alt="gallery">
-                                 </div>
-                                 <div class="col">
-                                     <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
-                                          alt="gallery">
-                                 </div>
-                                 <div class="col">
-                                     <img src="https://i.postimg.cc/W4yXnk7Y/1.jpg" class="gallery-item"
-                                          alt="gallery">
-                                 </div>
-                             </div>
-                         </div>
-                     </section> -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src="img/1.jpg" class="modal-img" alt="modal img">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   
+                    
 
                 </article>
             </div>

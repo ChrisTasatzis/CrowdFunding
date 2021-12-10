@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark   ">
         <div class="container-fluid">
 
-            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img height="60" width="170" src="https://i.postimg.cc/43hWYQ7Q/logo-cor.png"></a>
+            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img height="60" width="170" src="~/site-images/logo-cor.png"></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,12 @@
 
                         </div>
                     </li>
-
+                     <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Aboutus">
+                            <span class="fas fa-info fa-lg"></span>
+                            About us
+                        </a>
+                    </li>
                 </ul>
 
                 <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2 ">
