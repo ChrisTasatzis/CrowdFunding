@@ -5,11 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CrowdFundingAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class FundingPackageController : ControllerBase
     {
-        
         public IFundingPackage FundingPackageService { get; set; }
         public FundingPackageController (IFundingPackage fundingPackageService)
         {
