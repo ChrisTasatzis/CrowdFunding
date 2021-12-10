@@ -3,26 +3,29 @@
 
 <form asp-action="addfundingpackage" id='formID'>
     <div asp-validation-summary="All" class="text-danger"></div>
+
     <div class="form-floating mb-3 mt-3" style="color:silver;">
-        
-        <input type="text" asp-for="@Model.Name" class="form-control" placeholder="Name" name="Name"/>
+        <h3> <label>Add a funding package to your project</label> </h3>
+    </div>
+    <div class="form-floating mb-3 mt-3" style="color:silver;">
+        <input type="text" asp-for="@Model.Name" class="form-control" placeholder="Name" name="Name" />
         <label asp-for="@Model.Name">Name</label>
     </div>
 
 
     <div class="form-floating mb-3 mt-3" style="color:silver;">
-        
-        <input type="text" asp-for="@Model.Reward" class="form-control" placeholder="Reward"  name="Reward"/>
+
+        <input type="text" asp-for="@Model.Reward" class="form-control" placeholder="Reward" name="Reward" />
         <label asp-for="@Model.Reward">Reward</label>
     </div>
 
 
-    <div class="form-floating mb-3 mt-3" style="color:silver;" >
-        
-        <input type="number" asp-for="@Model.Price" class="form-control" placeholder="Price"  name="Price"/>
+    <div class="form-floating mb-3 mt-3" style="color:silver;">
+
+        <input type="number" asp-for="@Model.Price" class="form-control" placeholder="Price" name="Price" />
         <label asp-for="@Model.Price">Price</label>
     </div>
-    
+
 
     <input type="hidden" asp-for="@Model.ProjectId" />
 

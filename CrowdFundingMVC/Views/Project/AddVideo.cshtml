@@ -7,6 +7,7 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group" style="color:silver;">
+        <h3> <label asp-for="@Model.URL">Add a video to your project</label> </h3>
         <textarea asp-for="@Model.URL" class="form-control mb-3 mt-3" type="text"></textarea>
         <input type="hidden" asp-for="@Model.ProjectId" />
     </div>

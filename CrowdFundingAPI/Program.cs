@@ -15,6 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CFContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CrowdFundingDB")));
 
+builder.Services.AddScoped<IFundingPackage, FundingPackageService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
