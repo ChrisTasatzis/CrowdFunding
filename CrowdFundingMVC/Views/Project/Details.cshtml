@@ -106,11 +106,6 @@
                         <div class="media">
 
                             <div class="media-body">
-                                @if (signInManager.IsSignedIn(User))
-                                {
-                                    @if (Model.Project.ProjectCreator.Id == user.Id)
-
-                                    {
                                         <div class="table-responsive-sm">
                                             <table class="table table-striped  ">
                                                 <thead>
@@ -119,13 +114,18 @@
                                                             <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
                                                             <span>On @Model.Project.DateTime.ToString()</span>
                                                         </th>
-
-                                                        <th><a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="fas fa-plus-square fa-3x"></a></th>
-
-                                                        <th> <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="fas fa-hand-holding-usd fa-3x"></a></th>
-                                                        <th><a asp-controller="Project" asp-action="AddPhoto" asp-route-id="@Model.Project.Id" class="far fa-image fa-3x"></a></th>
-                                                        <th><a asp-controller="Project" asp-action="AddVideo" asp-route-id="@Model.Project.Id" class="fab fa-youtube fa-3x"></a></th>
-                                                        <th> <a href='' class="far fa-trash-alt fa-3x" data-bs-toggle="modal" data-bs-target="#myModaldel"> </a></th>
+                                                    
+                                                    @if (signInManager.IsSignedIn(User))
+                                                    {
+                                                        @if (Model.Project.ProjectCreator.Id == user.Id)
+                                                        {
+                                                            <th><a asp-controller="Project" asp-action="AddPost" asp-route-id="@Model.Project.Id" class="fas fa-plus-square fa-3x"></a></th>
+                                                            <th> <a asp-controller="Project" asp-action="AddFundingPackage" asp-route-id="@Model.Project.Id" class="fas fa-hand-holding-usd fa-3x"></a></th>
+                                                            <th><a asp-controller="Project" asp-action="AddPhoto" asp-route-id="@Model.Project.Id" class="far fa-image fa-3x"></a></th>
+                                                            <th><a asp-controller="Project" asp-action="AddVideo" asp-route-id="@Model.Project.Id" class="fab fa-youtube fa-3x"></a></th>
+                                                            <th> <a href='' class="far fa-trash-alt fa-3x" data-bs-toggle="modal" data-bs-target="#myModaldel"> </a></th>
+                                                        }
+                                                    }
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -155,22 +155,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
-                                    }
-                                }
-                                else
-                                {
-
-
-                                    <label> Created By @Model.Project.ProjectCreator.FirstName @Model.Project.ProjectCreator.LastName </label>
-                                    <span>On @Model.Project.DateTime.ToString()</span>
-
-
-                                }
-
                             </div>
                         </div>
                     </div>

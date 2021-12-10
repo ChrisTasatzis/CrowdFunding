@@ -2,7 +2,7 @@
 A Concept Crowd Funding Platform. Users can create projects, add photos, videos and funding packages to their project, as well as posts status updates. 
 Users can also track their projects's progress through a simple dashboard.
 
-Regenaration Cloud Tools and Technologh final project.
+Regenaration Cloud Tools and Technology final project.
 
 
 # Built With
