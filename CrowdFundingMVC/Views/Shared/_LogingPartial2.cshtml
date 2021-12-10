@@ -1,0 +1,16 @@
+﻿@using CrowdFunding.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="MyAccount">
+                <span class="fa fa-address-card fa-lg"></span>
+                My Account
+            </a>
+        </li>
+    }
+    

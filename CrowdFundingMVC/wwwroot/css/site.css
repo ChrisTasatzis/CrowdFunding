@@ -588,3 +588,10 @@ a {
 .col-md-3 {
     margin-top: 10px
 }
+.modal-backdrop {
+    background-image: url(/site-images/giphy.gif);
+}
+
+.fa-info {
+    margin-right:6px;
+}

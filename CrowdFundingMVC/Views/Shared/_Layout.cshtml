@@ -49,6 +49,7 @@
                             About us
                         </a>
                     </li>
+                     <partial name="_LogingPartial2" />
                 </ul>
 
                 <form method="get" asp-controller="Project" asp-action="Search" class="d-flex col-2 ">
@@ -125,8 +126,9 @@
                 <div class="col-5 offset-sm-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a style="color: silver" href='~/Home/Index'> <span class="fa fa-home "></span>Home</a></li>
+                        <li><a style="color: silver" href='~/Home/Index'> <span class="fa fa-home "></span> Home</a></li>
                         <li><a style="color: silver" data-bs-toggle="collapse" data-bs-target="#colacat" href=''><span class="fa fa-tasks"></span> Categories</a></li>
+                        <li><a    href='~/Home/Aboutus'> <span class="fas fa-info " style =" margin-left:5px;  "></span> About us</a></li>
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li><a style="color: silver" href='~/Account/myaccount'><span class="fa fa-address-card "></span> My Account</a></li>
