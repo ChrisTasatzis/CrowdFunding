@@ -37,4 +37,4 @@ Regenaration Cloud Tools and Technology final project.
   - [kostast13](https://github.com/kostast13)
 
 # WebSite Host
-Kikcio website can be found in Azure [kikcio](https://crowdfundingmvc20211209125608.azurewebsites.net)
+Kikcio website is not online at the momment.
